@@ -9,8 +9,8 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "../utilities/material-components";
-import { LogoutIcon } from "../utilities/material-icons";
+} from "../utilities/material-ui/material-components";
+import { LogoutIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation } from "react-router-dom";
 const settings = ["Explore", "Bookmarks", "Notifications", "Profile", "Logout"];
 

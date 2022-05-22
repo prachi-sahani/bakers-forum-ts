@@ -12,10 +12,10 @@ import {
   Checkbox,
   Radio,
   RadioGroup,
-} from "../utilities/material-components";
+} from "../utilities/material-ui/material-components";
 import { Discussion } from "../types/Discussion";
 import { DiscussionCard } from "./DiscussionCard";
-import { FilterListIcon } from "../utilities/material-icons";
+import { FilterListIcon } from "../utilities/material-ui/material-icons";
 import React from "react";
 
 const discussions: Discussion[] = [

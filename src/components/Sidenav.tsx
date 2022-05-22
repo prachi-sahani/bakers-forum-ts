@@ -6,7 +6,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-} from "../utilities/material-components";
+} from "../utilities/material-ui/material-components";
 import React from "react";
 import { AddQuestion } from "./AddQuestion";
 

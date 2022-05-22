@@ -1,13 +1,13 @@
 import * as React from "react";
-import { styled } from "../utilities/material-styles";
+import { styled } from "../utilities/material-ui/material-styles";
 import { IconButtonProps } from "@mui/material/IconButton";
-import { grey } from "../utilities/material-colors";
+import { grey } from "../utilities/material-ui/material-colors";
 import {
   CommentOutlinedIcon,
   ShareOutlinedIcon,
   BookmarkBorderOutlinedIcon,
   ChangeHistoryIcon,
-} from "../utilities/material-icons";
+} from "../utilities/material-ui/material-icons";
 import {
   Box,
   Button,
@@ -26,7 +26,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
-} from "../utilities/material-components";
+} from "../utilities/material-ui/material-components";
 import { Discussion } from "../types/Discussion";
 
 interface ExpandMoreProps extends IconButtonProps {

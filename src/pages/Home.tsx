@@ -1,8 +1,8 @@
-import { Box, Fab } from "../utilities/material-components";
+import { Box, Fab } from "../utilities/material-ui/material-components";
 import { DiscussionCardsSection } from "../components/DiscussionCardsSection";
 import { Sidenav } from "../components/Sidenav";
 import { TrendingSection } from "../components/TrendingSection";
-import { AddIcon } from "../utilities/material-icons";
+import { AddIcon } from "../utilities/material-ui/material-icons";
 import { useState } from "react";
 
 export function Home() {

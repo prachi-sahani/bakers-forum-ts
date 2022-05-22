@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "../utilities/material-components";
+import { Box, Button, Typography } from "../utilities/material-ui/material-components";
 import { Link } from "react-router-dom";
 
 export function LandingPage() {

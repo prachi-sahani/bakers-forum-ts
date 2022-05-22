@@ -5,7 +5,7 @@ import {
   TextField,
   Typography,
   Autocomplete,
-} from "../utilities/material-components";
+} from "../utilities/material-ui/material-components";
 import React from "react";
 
 interface AddQuestionProp {

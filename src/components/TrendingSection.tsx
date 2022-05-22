@@ -6,7 +6,7 @@ import {
   ListItemText,
   OutlinedInput,
   Typography,
-} from "../utilities/material-components";
+} from "../utilities/material-ui/material-components";
 
 const trendingList = [
   "COVID-19",

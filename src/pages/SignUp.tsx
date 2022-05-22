@@ -7,9 +7,9 @@ import {
   Grid,
   TextField,
   Typography,
-} from "../utilities/material-components";
-import { LockOutlinedIcon } from "../utilities/material-icons";
-import { createTheme, ThemeProvider } from "../utilities/material-styles";
+} from "../utilities/material-ui/material-components";
+import { LockOutlinedIcon } from "../utilities/material-ui/material-icons";
+import { createTheme, ThemeProvider } from "../utilities/material-ui/material-styles";
 import { Link } from "react-router-dom";
 
 const theme = createTheme();
