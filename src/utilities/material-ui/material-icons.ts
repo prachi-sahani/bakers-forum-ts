@@ -6,6 +6,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import LogoutIcon from '@mui/icons-material/Logout';
+import CloseIcon from '@mui/icons-material/Close';
 
 export {
   CommentOutlinedIcon,
@@ -15,5 +16,6 @@ export {
   FilterListIcon,
   LockOutlinedIcon,
   AddIcon,
-  LogoutIcon
+  LogoutIcon,
+  CloseIcon
 };
