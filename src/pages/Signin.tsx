@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Avatar,
   Box,
@@ -9,23 +9,62 @@ import {
   Typography,
 } from "../utilities/material-ui/material-components";
 import { LockOutlinedIcon } from "../utilities/material-ui/material-icons";
-import { createTheme, ThemeProvider } from "../utilities/material-ui/material-styles";
-import { Link } from "react-router-dom";
-
-const theme = createTheme();
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { signIn } from "../slices/authenticationSlice";
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
+import { CustomSnackbar } from "../components/CustomSnackbar";
+import { FullscreenLoader } from "../components/FullscreenLoader";
 
 export function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState({
+    emailError: "",
+    passwordError: "",
+  });
+  const { signInStatus, signInError, authToken } = useAppSelector(
+    (state) => state.authentication
+  );
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    // if user is already logged in and tries to access signin page, they will be redirected to previous page
+    if (authToken) {
+      navigate(-1);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (signInStatus === "fulfilled" && authToken) {
+      const lastState: any = location?.state;
+      const lastRoute: string = lastState?.from?.pathname || "/home";
+      navigate(lastRoute);
+    }
+  }, [signInStatus]);
+
+  const signInUser = (type: string) => {
+    if (type === "user") {
+      if (!email || !password) {
+        if (!email) {
+          setError({ ...error, emailError: "Required Field" });
+        }
+        if (!password) {
+          setError({ ...error, passwordError: "Required Field" });
+        }
+      } else {
+        dispatch(signIn({ email, password }));
+      }
+    } else if (type === "guest") {
+      dispatch(signIn({ email: "sample.user@email.com", password: "123456" }));
+    }
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <React.Fragment>
+      {signInStatus === "loading" && <FullscreenLoader />}
+      {signInStatus === "error" && <CustomSnackbar message={signInError} />}
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -41,12 +80,7 @@ export function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -56,6 +90,13 @@ export function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              helperText={error.emailError}
+              error={error.emailError !== ""}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError({ ...error, emailError: "" });
+              }}
             />
             <TextField
               margin="normal"
@@ -66,10 +107,18 @@ export function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              helperText={error.passwordError}
+              error={error.passwordError !== ""}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError({ ...error, passwordError: "" });
+              }}
             />
             <Button
-              type="submit"
+              type="button"
               fullWidth
+              onClick={() => signInUser("user")}
               variant="contained"
               sx={{ mt: 2, mb: 1 }}
             >
@@ -79,7 +128,8 @@ export function SignIn() {
               OR
             </Typography>
             <Button
-              type="submit"
+              type="button"
+              onClick={() => signInUser("guest")}
               fullWidth
               variant="contained"
               sx={{ mt: 1, mb: 2 }}
@@ -105,6 +155,6 @@ export function SignIn() {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+    </React.Fragment>
   );
 }

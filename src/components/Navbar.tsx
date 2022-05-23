@@ -12,10 +12,13 @@ import {
 } from "../utilities/material-ui/material-components";
 import { LogoutIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch } from "../redux/customHook";
+import { logout } from "../slices/authenticationSlice";
 const settings = ["Explore", "Bookmarks", "Notifications", "Profile", "Logout"];
 
 export function Navbar() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -61,7 +64,7 @@ export function Navbar() {
             }}
           >
             <Tooltip title="Logout">
-              <IconButton>
+              <IconButton onClick={() => dispatch(logout())}>
                 <LogoutIcon sx={{ color: "white" }} />
               </IconButton>
             </Tooltip>

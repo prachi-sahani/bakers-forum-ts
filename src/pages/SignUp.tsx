@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Avatar,
   Box,
@@ -9,23 +9,96 @@ import {
   Typography,
 } from "../utilities/material-ui/material-components";
 import { LockOutlinedIcon } from "../utilities/material-ui/material-icons";
-import { createTheme, ThemeProvider } from "../utilities/material-ui/material-styles";
-import { Link } from "react-router-dom";
-
-const theme = createTheme();
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
+import { signUp } from "../slices/authenticationSlice";
+import { SignUpDataToSend } from "../types/SignUpDataToSend";
+import { CustomSnackbar } from "../components/CustomSnackbar";
+import { FullscreenLoader } from "../components/FullscreenLoader";
 
 export function SignUp() {
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { signUpStatus, signUpError, authToken } = useAppSelector(
+    (state) => state.authentication
+  );
+  const [formData, setFormData] = React.useState<SignUpDataToSend>({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+  });
+  const [error, setError] = React.useState({
+    emailError: "",
+    passwordError: "",
+    firstNameError: "",
+    lastNameError: "",
+  });
+  React.useEffect(() => {
+    // if user is already logged in and tries to access signup page, they will be redirected to previous page
+    if (authToken) {
+      navigate(-1);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (signUpStatus === "fulfilled" && authToken) {
+      const lastState: any = location?.state;
+      const lastRoute: string = lastState?.from?.pathname || "/home";
+      navigate(lastRoute);
+    }
+  }, [signUpStatus]);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    if (
+      formData.email &&
+      formData.password &&
+      formData.firstName &&
+      formData.lastName
+    ) {
+      const dataToSend: SignUpDataToSend = {
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      };
+      setFormData(dataToSend);
+      dispatch(signUp(dataToSend));
+    } else {
+      let updatedErrorObj = { ...error };
+      if (!formData.email) {
+        updatedErrorObj = {
+          ...updatedErrorObj,
+          emailError: "Required Field",
+        };
+      }
+      if (!formData.password) {
+        updatedErrorObj = {
+          ...updatedErrorObj,
+          passwordError: "Required Field",
+        };
+      }
+      if (!formData.firstName) {
+        updatedErrorObj = {
+          ...updatedErrorObj,
+          firstNameError: "Required Field",
+        };
+      }
+      if (!formData.lastName) {
+        updatedErrorObj = {
+          ...updatedErrorObj,
+          lastNameError: "Required Field",
+        };
+      }
+      setError(updatedErrorObj);
+    }
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <React.Fragment>
+      {signUpStatus === "loading" && <FullscreenLoader />}
+      {signUpStatus === "error" && <CustomSnackbar message={signUpError} />}
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -57,6 +130,13 @@ export function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={formData.firstName}
+                  helperText={error.firstNameError}
+                  error={error.firstNameError !== ""}
+                  onChange={(e) => {
+                    setFormData({ ...formData, firstName: e.target.value });
+                    setError({ ...error, firstNameError: "" });
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -67,6 +147,13 @@ export function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={formData.lastName}
+                  helperText={error.lastNameError}
+                  error={error.lastNameError !== ""}
+                  onChange={(e) => {
+                    setFormData({ ...formData, lastName: e.target.value });
+                    setError({ ...error, lastNameError: "" });
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -77,6 +164,13 @@ export function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={formData.email}
+                  helperText={error.emailError}
+                  error={error.emailError !== ""}
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                    setError({ ...error, emailError: "" });
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -88,6 +182,13 @@ export function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={formData.password}
+                  helperText={error.passwordError}
+                  error={error.passwordError !== ""}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                    setError({ ...error, passwordError: "" });
+                  }}
                 />
               </Grid>
             </Grid>
@@ -111,6 +212,6 @@ export function SignUp() {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+    </React.Fragment>
   );
 }
