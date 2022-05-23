@@ -12,7 +12,7 @@ export function CustomSnackbar({ message }: { message: string }) {
       open={open}
       autoHideDuration={3000}
       onClose={() => setOpen(false)}
-      message={message}
+      message={message || "Some error occurred. Try Again!"}
       action={
         <React.Fragment>
           <IconButton

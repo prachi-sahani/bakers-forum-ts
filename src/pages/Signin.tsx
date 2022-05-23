@@ -47,12 +47,20 @@ export function SignIn() {
   const signInUser = (type: string) => {
     if (type === "user") {
       if (!email || !password) {
+        let updatedErrorObj = { ...error };
         if (!email) {
-          setError({ ...error, emailError: "Required Field" });
+          updatedErrorObj = {
+            ...updatedErrorObj,
+            emailError: "Required Field",
+          };
         }
         if (!password) {
-          setError({ ...error, passwordError: "Required Field" });
+          updatedErrorObj = {
+            ...updatedErrorObj,
+            passwordError: "Required Field",
+          };
         }
+        setError(updatedErrorObj);
       } else {
         dispatch(signIn({ email, password }));
       }
