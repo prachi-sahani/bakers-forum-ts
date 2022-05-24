@@ -1,10 +1,10 @@
 import "./App.css";
 import { Navbar } from "./components/Navbar";
-import { Home } from "./pages/Home";
+import { Feed } from "./pages/feed";
 import { Route, Routes } from "react-router-dom";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/Signin";
-import { LandingPage } from "./components/LandingPage";
+import { LandingPage } from "./pages/LandingPage";
 import { RequireAuth } from "./components/RequireAuth";
 function App() {
   return (
@@ -14,10 +14,10 @@ function App() {
         <Route path="" element={<LandingPage />}></Route>
         <Route path="/signIn" element={<SignIn />}></Route>
         <Route
-          path="/home"
+          path="/feed"
           element={
             <RequireAuth>
-              <Home />
+              <Feed />
             </RequireAuth>
           }
         ></Route>

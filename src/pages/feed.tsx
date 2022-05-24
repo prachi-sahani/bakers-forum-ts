@@ -5,7 +5,7 @@ import { TrendingSection } from "../components/TrendingSection";
 import { AddIcon } from "../utilities/material-ui/material-icons";
 import { useState } from "react";
 
-export function Home() {
+export function Feed() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   return (

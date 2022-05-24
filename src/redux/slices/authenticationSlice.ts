@@ -1,17 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { SignInDataToSend } from "../types/SignInDataToSend";
-import { SignUpDataToSend } from "../types/SignUpDataToSend";
+import { SignInDataToSend } from "../../types/SignInDataToSend";
+import { SignUpDataToSend } from "../../types/SignUpDataToSend";
 import {
   signInUser,
   signUpUser,
-} from "../utilities/server-request/server-request";
+} from "../../utilities/server-request/server-request";
 
 const initialData = {
   authToken: localStorage.getItem("token") || "",
-  signInStatus: "idle",
-  signInError: "",
-  signUpStatus: "idle",
-  signUpError: "",
+  authStatus: "idle",
+  authError: "",
 };
 const callSignIn = async (
   { email, password }: SignInDataToSend,
@@ -50,28 +48,28 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state) => {
-      state.signInStatus = "loading";
+      state.authStatus = "loading";
     });
     builder.addCase(signIn.fulfilled, (state, action) => {
-      state.signInStatus = "fulfilled";
+      state.authStatus = "fulfilled";
       state.authToken = action.payload;
       localStorage.setItem("token", state.authToken);
     });
     builder.addCase(signIn.rejected, (state, action) => {
-      state.signInStatus = "error";
-      state.signInError = String(action.payload);
+      state.authStatus = "error";
+      state.authError = String(action.payload);
     });
     builder.addCase(signUp.pending, (state) => {
-      state.signUpStatus = "loading";
+      state.authStatus = "loading";
     });
     builder.addCase(signUp.fulfilled, (state, action) => {
-      state.signUpStatus = "fulfilled";
+      state.authStatus = "fulfilled";
       state.authToken = action.payload;
       localStorage.setItem("token", state.authToken);
     });
     builder.addCase(signUp.rejected, (state, action) => {
-      state.signUpStatus = "error";
-      state.signUpError = String(action.payload);
+      state.authStatus = "error";
+      state.authError = String(action.payload);
     });
   },
 });

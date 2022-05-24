@@ -11,7 +11,7 @@ import {
 import { LockOutlinedIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
-import { signUp } from "../slices/authenticationSlice";
+import { signUp } from "../redux/slices/authenticationSlice";
 import { SignUpDataToSend } from "../types/SignUpDataToSend";
 import { CustomSnackbar } from "../components/CustomSnackbar";
 import { FullscreenLoader } from "../components/FullscreenLoader";
@@ -20,7 +20,7 @@ export function SignUp() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { signUpStatus, signUpError, authToken } = useAppSelector(
+  const { authStatus, authError, authToken } = useAppSelector(
     (state) => state.authentication
   );
   const [formData, setFormData] = React.useState<SignUpDataToSend>({
@@ -42,12 +42,12 @@ export function SignUp() {
     }
   }, []);
   React.useEffect(() => {
-    if (signUpStatus === "fulfilled" && authToken) {
+    if (authStatus === "fulfilled" && authToken) {
       const lastState: any = location?.state;
       const lastRoute: string = lastState?.from?.pathname || "/home";
       navigate(lastRoute);
     }
-  }, [signUpStatus]);
+  }, [authStatus]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -97,8 +97,8 @@ export function SignUp() {
 
   return (
     <React.Fragment>
-      {signUpStatus === "loading" && <FullscreenLoader />}
-      {signUpStatus === "error" && <CustomSnackbar message={signUpError} />}
+      {authStatus === "loading" && <FullscreenLoader />}
+      {authStatus === "error" && <CustomSnackbar message={authError} />}
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

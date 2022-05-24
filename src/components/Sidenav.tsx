@@ -12,8 +12,8 @@ import { AddQuestion } from "./AddQuestion";
 
 const sidenavItem = [
   {
-    icon: "home",
-    title: "Home",
+    icon: "feed",
+    title: "Feed",
   },
   {
     icon: "rocket",

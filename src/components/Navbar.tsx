@@ -13,7 +13,7 @@ import {
 import { LogoutIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../redux/customHook";
-import { logout } from "../slices/authenticationSlice";
+import { logout } from "../redux/slices/authenticationSlice";
 const settings = ["Explore", "Bookmarks", "Notifications", "Profile", "Logout"];
 
 export function Navbar() {
@@ -54,7 +54,7 @@ export function Navbar() {
           </Box>
         </Link>
 
-        {location.pathname === "/home" && (
+        {location.pathname === "/UuerFeed" && (
           <Box
             sx={{
               flexGrow: 0,

@@ -1,7 +1,13 @@
-import { Box, Button, Typography } from "../utilities/material-ui/material-components";
+import {
+  Box,
+  Button,
+  Typography,
+} from "../utilities/material-ui/material-components";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/customHook";
 
 export function LandingPage() {
+  const { authToken } = useAppSelector((state) => state.authentication);
   return (
     <Box
       sx={{
@@ -48,21 +54,34 @@ export function LandingPage() {
             business to next level{" "}
           </Typography>
         </Box>
-        <Box component="div">
-          <Link to="/signUp" style={{ textDecoration: "none" }}>
-            <Button
-              variant="contained"
-              sx={{ width: "max-content", display: "flex", my: 1 }}
-            >
-              JOIN NOW
-            </Button>
-          </Link>
-          <Link to="/signIn" style={{ textDecoration: "none" }}>
-            <Typography component="span" color="primary" variant="body1">
-              Already have an account?
-            </Typography>
-          </Link>
-        </Box>
+        {authToken ? (
+          <Box component="div">
+            <Link to="/feed" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{ width: "max-content", display: "flex", my: 1 }}
+              >
+                EXPLORE NOW
+              </Button>
+            </Link>
+          </Box>
+        ) : (
+          <Box component="div">
+            <Link to="/signUp" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{ width: "max-content", display: "flex", my: 1 }}
+              >
+                JOIN NOW
+              </Button>
+            </Link>
+            <Link to="/signIn" style={{ textDecoration: "none" }}>
+              <Typography component="span" color="primary" variant="body1">
+                Already have an account?
+              </Typography>
+            </Link>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{

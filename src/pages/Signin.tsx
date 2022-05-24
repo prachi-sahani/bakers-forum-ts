@@ -10,7 +10,7 @@ import {
 } from "../utilities/material-ui/material-components";
 import { LockOutlinedIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { signIn } from "../slices/authenticationSlice";
+import { signIn } from "../redux/slices/authenticationSlice";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { CustomSnackbar } from "../components/CustomSnackbar";
 import { FullscreenLoader } from "../components/FullscreenLoader";
@@ -24,7 +24,7 @@ export function SignIn() {
     emailError: "",
     passwordError: "",
   });
-  const { signInStatus, signInError, authToken } = useAppSelector(
+  const { authStatus, authError, authToken } = useAppSelector(
     (state) => state.authentication
   );
   const dispatch = useAppDispatch();
@@ -37,12 +37,12 @@ export function SignIn() {
   }, []);
 
   React.useEffect(() => {
-    if (signInStatus === "fulfilled" && authToken) {
+    if (authStatus === "fulfilled" && authToken) {
       const lastState: any = location?.state;
-      const lastRoute: string = lastState?.from?.pathname || "/home";
+      const lastRoute: string = lastState?.from?.pathname || "/feed";
       navigate(lastRoute);
     }
-  }, [signInStatus]);
+  }, [authStatus]);
 
   const signInUser = (type: string) => {
     if (type === "user") {
@@ -71,8 +71,8 @@ export function SignIn() {
 
   return (
     <React.Fragment>
-      {signInStatus === "loading" && <FullscreenLoader />}
-      {signInStatus === "error" && <CustomSnackbar message={signInError} />}
+      {authStatus === "loading" && <FullscreenLoader />}
+      {authStatus === "error" && <CustomSnackbar message={authError} />}
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
