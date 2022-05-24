@@ -26,6 +26,7 @@ import {
   ListItemText,
   Typography,
   TextField,
+  Tooltip,
 } from "../utilities/material-ui/material-components";
 import { Discussion } from "../types/Discussion";
 
@@ -65,17 +66,25 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
           px: { xs: 1 },
         }}
       >
-        <IconButton aria-label="upvote" color="primary" sx={{ px: { xs: 0 } }}>
-          <ChangeHistoryIcon sx={{ fontSize: "1.75rem" }} />
-        </IconButton>
+        <Tooltip title="Upvote">
+          <IconButton
+            aria-label="upvote"
+            color="primary"
+            sx={{ px: { xs: 0 } }}
+          >
+            <ChangeHistoryIcon sx={{ fontSize: "1.75rem" }} />
+          </IconButton>
+        </Tooltip>
         <Typography variant="body1" color="primary">
           {discussion.votes}
         </Typography>
-        <IconButton aria-label="downvote" sx={{ px: { xs: 0 } }}>
-          <ChangeHistoryIcon
-            sx={{ transform: "rotate(180deg)", fontSize: "1.75rem" }}
-          />
-        </IconButton>
+        <Tooltip title="Downvote">
+          <IconButton aria-label="downvote" sx={{ px: { xs: 0 } }}>
+            <ChangeHistoryIcon
+              sx={{ transform: "rotate(180deg)", fontSize: "1.75rem" }}
+            />
+          </IconButton>
+        </Tooltip>
       </CardActions>
       <Box sx={{ p: 1, px: { xs: 0.5 } }}>
         <CardHeader

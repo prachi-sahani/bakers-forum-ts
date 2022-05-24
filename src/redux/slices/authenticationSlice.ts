@@ -1,40 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { SignInDataToSend } from "../../types/SignInDataToSend";
-import { SignUpDataToSend } from "../../types/SignUpDataToSend";
 import { FULFILLED, IDLE, LOADING } from "../../utilities/constants/api-status";
 import {
-  signInUser,
-  signUpUser,
-} from "../../utilities/server-request/server-request";
+  callSignIn,
+  callSignUp,
+} from "../../utilities/services/authentication";
 
 const initialData = {
   authToken: localStorage.getItem("token") || "",
   authStatus: IDLE,
   authError: "",
 };
-const callSignIn = async (
-  { email, password }: SignInDataToSend,
-  { rejectWithValue }: any
-): Promise<string> => {
-  try {
-    const { data } = await signInUser({ email, password });
-    return data.encodedToken;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data.errors[0]);
-  }
-};
 
-const callSignUp = async (
-  dataToSend: SignUpDataToSend,
-  { rejectWithValue }: any
-): Promise<string> => {
-  try {
-    const { data } = await signUpUser(dataToSend);
-    return data.encodedToken;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data.errors[0]);
-  }
-};
 export const signIn = createAsyncThunk("authentication/signIn", callSignIn);
 export const signUp = createAsyncThunk("authentication/signUp", callSignUp);
 

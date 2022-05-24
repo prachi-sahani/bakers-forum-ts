@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from "../utilities/material-ui/material-components";
 import React from "react";
-import { AddQuestion } from "./AddQuestion";
+import { AddQuestion } from "./AddQuestionModal";
 
 const sidenavItem = [
   {
