@@ -1,12 +1,14 @@
 import { Box } from "../utilities/material-ui/material-components";
-import { DiscussionCardsSection } from "../components/DiscussionCardsSection";
-import { Sidenav } from "../components/Sidenav";
-import { TrendingSection } from "../components/TrendingSection";
-import { useState } from "react";
-import { AddPostMobile } from "../components/AddPostMobile";
+import {
+  DiscussionCardsSection,
+  TrendingSection,
+  AddPostMobile,
+  Sidenav,
+} from "../components/index";
+import React from "react";
 
 export function Feed() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   return (
     <Box

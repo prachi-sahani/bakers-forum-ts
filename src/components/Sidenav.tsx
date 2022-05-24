@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from "../utilities/material-ui/material-components";
 import React from "react";
-import { AddQuestion } from "./AddQuestionModal";
+import { AddQuestionModal } from "./AddQuestionModal";
 
 const sidenavItem = [
   {
@@ -61,7 +61,7 @@ export function Sidenav({
           Create New Post
         </Button>
 
-        <AddQuestion open={open} setOpen={setOpen} />
+        <AddQuestionModal open={open} setOpen={setOpen} />
       </Box>
     </Box>
   );

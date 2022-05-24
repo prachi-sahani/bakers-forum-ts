@@ -13,8 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { signUp } from "../redux/slices/authenticationSlice";
 import { SignUpDataToSend } from "../types/SignUpDataToSend";
-import { CustomSnackbar } from "../components/CustomSnackbar";
-import { FullscreenLoader } from "../components/FullscreenLoader";
+import { CustomSnackbar, FullscreenLoader } from "../components/index";
 import { FULFILLED, LOADING } from "../utilities/constants/api-status";
 
 export function SignUp() {

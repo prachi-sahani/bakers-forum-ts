@@ -15,7 +15,7 @@ interface AddQuestionProp {
 }
 
 const tags = ["Business", "Neogcamp", "Invact", "Roc8", "MBA", "Technology"];
-export function AddQuestion({ open, setOpen }: AddQuestionProp) {
+export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
   const handleClose = () => setOpen(false);
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>

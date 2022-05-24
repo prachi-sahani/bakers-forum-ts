@@ -12,8 +12,7 @@ import { LockOutlinedIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signIn } from "../redux/slices/authenticationSlice";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
-import { CustomSnackbar } from "../components/CustomSnackbar";
-import { FullscreenLoader } from "../components/FullscreenLoader";
+import { CustomSnackbar, FullscreenLoader } from "../components/index";
 import { FULFILLED, LOADING } from "../utilities/constants/api-status";
 
 export function SignIn() {
