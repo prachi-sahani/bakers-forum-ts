@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { SignInDataToSend } from "../../types/SignInDataToSend";
 import { SignUpDataToSend } from "../../types/SignUpDataToSend";
+import { FULFILLED, IDLE, LOADING } from "../../utilities/constants/api-status";
 import {
   signInUser,
   signUpUser,
@@ -8,7 +9,7 @@ import {
 
 const initialData = {
   authToken: localStorage.getItem("token") || "",
-  authStatus: "idle",
+  authStatus: IDLE,
   authError: "",
 };
 const callSignIn = async (
@@ -48,10 +49,10 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state) => {
-      state.authStatus = "loading";
+      state.authStatus = LOADING;
     });
     builder.addCase(signIn.fulfilled, (state, action) => {
-      state.authStatus = "fulfilled";
+      state.authStatus = FULFILLED;
       state.authToken = action.payload;
       localStorage.setItem("token", state.authToken);
     });
@@ -60,10 +61,10 @@ const authSlice = createSlice({
       state.authError = String(action.payload);
     });
     builder.addCase(signUp.pending, (state) => {
-      state.authStatus = "loading";
+      state.authStatus = LOADING;
     });
     builder.addCase(signUp.fulfilled, (state, action) => {
-      state.authStatus = "fulfilled";
+      state.authStatus = FULFILLED;
       state.authToken = action.payload;
       localStorage.setItem("token", state.authToken);
     });

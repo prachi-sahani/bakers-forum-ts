@@ -15,6 +15,7 @@ import { signUp } from "../redux/slices/authenticationSlice";
 import { SignUpDataToSend } from "../types/SignUpDataToSend";
 import { CustomSnackbar } from "../components/CustomSnackbar";
 import { FullscreenLoader } from "../components/FullscreenLoader";
+import { FULFILLED, LOADING } from "../utilities/constants/api-status";
 
 export function SignUp() {
   const dispatch = useAppDispatch();
@@ -42,7 +43,7 @@ export function SignUp() {
     }
   }, []);
   React.useEffect(() => {
-    if (authStatus === "fulfilled" && authToken) {
+    if (authStatus === FULFILLED && authToken) {
       const lastState: any = location?.state;
       const lastRoute: string = lastState?.from?.pathname || "/home";
       navigate(lastRoute);
@@ -97,7 +98,7 @@ export function SignUp() {
 
   return (
     <React.Fragment>
-      {authStatus === "loading" && <FullscreenLoader />}
+      {authStatus === LOADING && <FullscreenLoader />}
       {authStatus === "error" && <CustomSnackbar message={authError} />}
       <Container component="main" maxWidth="xs">
         <Box
