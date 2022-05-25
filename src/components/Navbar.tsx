@@ -54,7 +54,7 @@ export function Navbar() {
           </Box>
         </Link>
 
-        {location.pathname === "/UuerFeed" && (
+        {location.pathname === "/feed" && (
           <Box
             sx={{
               flexGrow: 0,
