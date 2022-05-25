@@ -96,7 +96,7 @@ export function SignIn() {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              autoComplete="off"
               autoFocus
               value={email}
               helperText={error.emailError}
@@ -114,7 +114,7 @@ export function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="off"
               value={password}
               helperText={error.passwordError}
               error={error.passwordError !== ""}

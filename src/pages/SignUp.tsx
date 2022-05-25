@@ -109,7 +109,7 @@ export function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="off"
                   name="firstName"
                   required
                   fullWidth
@@ -132,7 +132,7 @@ export function SignUp() {
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  autoComplete="family-name"
+                  autoComplete="off"
                   value={formData.lastName}
                   helperText={error.lastNameError}
                   error={error.lastNameError !== ""}
@@ -149,7 +149,7 @@ export function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
+                  autoComplete="off"
                   value={formData.email}
                   helperText={error.emailError}
                   error={error.emailError !== ""}
@@ -167,7 +167,7 @@ export function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
+                  autoComplete="off"
                   value={formData.password}
                   helperText={error.passwordError}
                   error={error.passwordError !== ""}
