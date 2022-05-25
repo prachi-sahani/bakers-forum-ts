@@ -1,10 +1,11 @@
 import {
-  Box,
   Button,
-  Modal,
   TextField,
-  Typography,
   Autocomplete,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "../utilities/material-ui/material-components";
 import React from "react";
 
@@ -12,32 +13,14 @@ interface AddQuestionProp {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "#fff",
-  borderRadius: 1,
-  boxShadow: 24,
-  p: 3,
-};
 
 const tags = ["Business", "Neogcamp", "Invact", "Roc8", "MBA", "Technology"];
-export function AddQuestion({ open, setOpen }: AddQuestionProp) {
+export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
   const handleClose = () => setOpen(false);
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography variant="h6" color="primary" sx={{ fontWeight: "bold" }}>
-          New Post
-        </Typography>
+    <Dialog open={open} onClose={handleClose} fullWidth>
+      <DialogTitle color="primary"> New Post</DialogTitle>
+      <DialogContent sx={{ px: 3, py: 0 }}>
         <TextField
           id="title"
           label="Post Title"
@@ -75,21 +58,13 @@ export function AddQuestion({ open, setOpen }: AddQuestionProp) {
             />
           )}
         />
-        <Box
-          sx={{
-            mt: 2,
-            display: "flex",
-            gap: 1,
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
-          <Button variant="text" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="contained">Post</Button>
-        </Box>
-      </Box>
-    </Modal>
+      </DialogContent>
+      <DialogActions sx={{ px: 3, py: 2 }}>
+        <Button variant="text" onClick={handleClose}>
+          Cancel
+        </Button>
+        <Button variant="contained">Post</Button>
+      </DialogActions>
+    </Dialog>
   );
 }

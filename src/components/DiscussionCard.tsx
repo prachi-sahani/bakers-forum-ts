@@ -20,12 +20,13 @@ import {
   Collapse,
   Divider,
   IconButton,
-  Input,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
+  TextField,
+  Tooltip,
 } from "../utilities/material-ui/material-components";
 import { Discussion } from "../types/Discussion";
 
@@ -58,21 +59,34 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
     <Card sx={{ display: "flex" }}>
       <CardActions
         disableSpacing
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          px: { xs: 1 },
+        }}
       >
-        <IconButton aria-label="upvote" color="primary">
-          <ChangeHistoryIcon sx={{ fontSize: "1.75rem" }} />
-        </IconButton>
+        <Tooltip title="Upvote">
+          <IconButton
+            aria-label="upvote"
+            color="primary"
+            sx={{ px: { xs: 0 } }}
+          >
+            <ChangeHistoryIcon sx={{ fontSize: "1.75rem" }} />
+          </IconButton>
+        </Tooltip>
         <Typography variant="body1" color="primary">
           {discussion.votes}
         </Typography>
-        <IconButton aria-label="downvote">
-          <ChangeHistoryIcon
-            sx={{ transform: "rotate(180deg)", fontSize: "1.75rem" }}
-          />
-        </IconButton>
+        <Tooltip title="Downvote">
+          <IconButton aria-label="downvote" sx={{ px: { xs: 0 } }}>
+            <ChangeHistoryIcon
+              sx={{ transform: "rotate(180deg)", fontSize: "1.75rem" }}
+            />
+          </IconButton>
+        </Tooltip>
       </CardActions>
-      <Box sx={{ p: 1 }}>
+      <Box sx={{ p: 1, px: { xs: 0.5 } }}>
         <CardHeader
           sx={{ p: 1 }}
           subheader={<Typography variant="h6">{discussion.title}</Typography>}
@@ -115,7 +129,13 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
           </Box>
         </CardContent>
         <Divider />
-        <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
+        <CardActions
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            px: { xs: 0.5 },
+          }}
+        >
           <ExpandMore
             sx={{ m: 0 }}
             expand={expanded}
@@ -133,24 +153,12 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          {/* <CardContent>
-            <ListItem sx={{ p: 0 }}>
-              <ListItemAvatar sx={{ minWidth: "2rem" }}>
-                <Avatar
-                  alt={discussion.postedBy[1]}
-                  src="/static/images/avatar/2.jpg"
-                  sx={{ bgcolor: grey[300], color: blue[600], height: "1.5rem", width: "1.5rem", fontSize: "1rem" }}
-                />
-              </ListItemAvatar>
-              <ListItemText primary={`${discussion.postedBy} | ${discussion.time}m ago`} />
-            </ListItem>
-            <Typography variant="body2" color="text.secondary">
-              {discussion.description}
-            </Typography>
-          </CardContent> */}
           <Divider />
           <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-            <ListItem alignItems="flex-start" sx={{ py: "4px", gap: 2 }}>
+            <ListItem
+              alignItems="flex-start"
+              sx={{ p: { xs: 0.5, md: 1 }, gap: 2 }}
+            >
               <ListItemAvatar sx={{ minWidth: 0 }}>
                 <Avatar
                   alt="Prachi Sahani"
@@ -170,8 +178,10 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
                     component="div"
                     sx={{ display: "flex", flexWrap: "wrap" }}
                   >
-                    <Input
+                    <TextField
                       placeholder="Add a comment..."
+                      variant="standard"
+                      multiline
                       sx={{ flexGrow: 1, fontSize: 14 }}
                     />
                     <Button variant="text" size="small" sx={{ ml: "auto" }}>
@@ -181,7 +191,10 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
                 }
               />
             </ListItem>
-            <ListItem alignItems="flex-start" sx={{ py: "4px", gap: 2 }}>
+            <ListItem
+              alignItems="flex-start"
+              sx={{ p: { xs: 0.5, md: 1 }, gap: 2 }}
+            >
               <ListItemAvatar sx={{ minWidth: 0 }}>
                 <Avatar
                   alt="Remy Sharp"
@@ -212,7 +225,10 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
               />
             </ListItem>
 
-            <ListItem alignItems="flex-start" sx={{ py: "4px", gap: 2 }}>
+            <ListItem
+              alignItems="flex-start"
+              sx={{ p: { xs: 0.5, md: 1 }, gap: 2 }}
+            >
               <ListItemAvatar sx={{ minWidth: 0 }}>
                 <Avatar
                   alt="Remy Sharp"
@@ -243,7 +259,10 @@ export function DiscussionCard({ discussion }: DiscussionCardProp) {
               />
             </ListItem>
 
-            <ListItem alignItems="flex-start" sx={{ py: "4px", gap: 2 }}>
+            <ListItem
+              alignItems="flex-start"
+              sx={{ p: { xs: 0.5, md: 1 }, gap: 2 }}
+            >
               <ListItemAvatar sx={{ minWidth: 0 }}>
                 <Avatar
                   alt="Remy Sharp"

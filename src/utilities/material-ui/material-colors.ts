@@ -1,2 +1,2 @@
-export { grey } from '@mui/material/colors';
+export { grey, blue } from '@mui/material/colors';
 
