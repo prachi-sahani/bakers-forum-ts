@@ -3,4 +3,5 @@ export interface SignUpDataToSend {
   password: string;
   firstName: string;
   lastName: string;
+  username: string;
 }

@@ -15,25 +15,28 @@ import { signUp } from "../redux/slices/authenticationSlice";
 import { SignUpDataToSend } from "../types/SignUpDataToSend";
 import { CustomSnackbar, FullscreenLoader } from "../components/index";
 import { FULFILLED, LOADING } from "../utilities/constants/api-status";
+import { RootState } from "../redux/store";
 
 export function SignUp() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { authStatus, authError, authToken } = useAppSelector(
-    (state) => state.authentication
+    (state: RootState) => state.authentication
   );
   const [formData, setFormData] = React.useState<SignUpDataToSend>({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
+    username: "",
   });
   const [error, setError] = React.useState({
     emailError: "",
     passwordError: "",
     firstNameError: "",
     lastNameError: "",
+    usernameError: "",
   });
   React.useEffect(() => {
     // if user is already logged in and tries to access signup page, they will be redirected to previous page
@@ -44,7 +47,7 @@ export function SignUp() {
   React.useEffect(() => {
     if (authStatus === FULFILLED && authToken) {
       const lastState: any = location?.state;
-      const lastRoute: string = lastState?.from?.pathname || "/home";
+      const lastRoute: string = lastState?.from?.pathname || "/feed";
       navigate(lastRoute);
     }
   }, [authStatus]);
@@ -62,6 +65,7 @@ export function SignUp() {
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
+        username: formData.username,
       };
       setFormData(dataToSend);
       dispatch(signUp(dataToSend));
@@ -139,6 +143,23 @@ export function SignUp() {
                   onChange={(e) => {
                     setFormData({ ...formData, lastName: e.target.value });
                     setError({ ...error, lastNameError: "" });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="off"
+                  value={formData.username}
+                  helperText={error.usernameError}
+                  error={error.usernameError !== ""}
+                  onChange={(e) => {
+                    setFormData({ ...formData, username: e.target.value });
+                    setError({ ...error, usernameError: "" });
                   }}
                 />
               </Grid>
