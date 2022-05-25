@@ -67,30 +67,16 @@ export function SignUp() {
       dispatch(signUp(dataToSend));
     } else {
       let updatedErrorObj = { ...error };
-      if (!formData.email) {
-        updatedErrorObj = {
-          ...updatedErrorObj,
-          emailError: "Required Field",
-        };
-      }
-      if (!formData.password) {
-        updatedErrorObj = {
-          ...updatedErrorObj,
-          passwordError: "Required Field",
-        };
-      }
-      if (!formData.firstName) {
-        updatedErrorObj = {
-          ...updatedErrorObj,
-          firstNameError: "Required Field",
-        };
-      }
-      if (!formData.lastName) {
-        updatedErrorObj = {
-          ...updatedErrorObj,
-          lastNameError: "Required Field",
-        };
-      }
+      // check and set required error for each key in formData
+      Object.keys(formData).forEach((item: string) => {
+        let fieldValue = formData[item as keyof SignUpDataToSend];
+        if (!fieldValue) {
+          updatedErrorObj = {
+            ...updatedErrorObj,
+            [`${item}Error`]: "Required Field",
+          };
+        }
+      });
       setError(updatedErrorObj);
     }
   };
