@@ -1,6 +1,4 @@
-import { Feed } from "./feed";
-import { LandingPage } from "./LandingPage";
-import { SignIn } from "./Signin";
-import { SignUp } from "./SignUp";
-
-export { Feed, LandingPage, SignIn, SignUp };
+export { Feed } from "./feed";
+export { LandingPage } from "./LandingPage";
+export { SignIn } from "./Signin";
+export { SignUp } from "./SignUp";

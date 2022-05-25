@@ -1,23 +1,10 @@
-import { AddPostMobile } from "./AddPostMobile";
-import { AddQuestionModal } from "./AddQuestionModal";
-import { CustomSnackbar } from "./CustomSnackbar";
-import { DiscussionCard } from "./DiscussionCard";
-import { DiscussionCardsSection } from "./DiscussionCardsSection";
-import { FullscreenLoader } from "./FullscreenLoader";
-import { Navbar } from "./Navbar";
-import { RequireAuth } from "./RequireAuth";
-import { Sidenav } from "./Sidenav";
-import { TrendingSection } from "./TrendingSection";
-
-export {
-  AddPostMobile,
-  AddQuestionModal,
-  CustomSnackbar,
-  DiscussionCard,
-  DiscussionCardsSection,
-  FullscreenLoader,
-  Navbar,
-  RequireAuth,
-  Sidenav,
-  TrendingSection,
-};
+export { AddPostMobile } from "./AddPostMobile";
+export { AddQuestionModal } from "./AddQuestionModal";
+export { CustomSnackbar } from "./CustomSnackbar";
+export { DiscussionCard } from "./DiscussionCard";
+export { DiscussionCardsSection } from "./DiscussionCardsSection";
+export { FullscreenLoader } from "./FullscreenLoader";
+export { Navbar } from "./Navbar";
+export { RequireAuth } from "./RequireAuth";
+export { Sidenav } from "./Sidenav";
+export { TrendingSection } from "./TrendingSection";
