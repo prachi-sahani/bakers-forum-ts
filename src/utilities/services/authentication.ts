@@ -3,12 +3,12 @@ import { SignUpDataToSend } from "../../types/SignUpDataToSend";
 import { signInUser, signUpUser } from "../server-request/server-request";
 
 const callSignIn = async (
-  { email, password }: SignInDataToSend,
+  { username, password }: SignInDataToSend,
   { rejectWithValue }: any
-): Promise<string> => {
+) => {
   try {
-    const { data } = await signInUser({ email, password });
-    return data.encodedToken;
+    const { data } = await signInUser({ username, password });
+    return { authToken: data.encodedToken, userDetails: data.foundUser };
   } catch (err: any) {
     return rejectWithValue(err.response.data.errors[0]);
   }
@@ -17,10 +17,10 @@ const callSignIn = async (
 const callSignUp = async (
   dataToSend: SignUpDataToSend,
   { rejectWithValue }: any
-): Promise<string> => {
+) => {
   try {
     const { data } = await signUpUser(dataToSend);
-    return data.encodedToken;
+    return { authToken: data.encodedToken, userDetails: data.createdUser };
   } catch (err: any) {
     return rejectWithValue(err.response.data.errors[0]);
   }

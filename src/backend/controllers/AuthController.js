@@ -10,20 +10,20 @@ const sign = require("jwt-encode");
 /**
  * This handler handles user signups.
  * send POST Request at /api/auth/signup
- * body contains {firstName, lastName, email, password}
+ * body contains {firstName, lastName, username, password}
  * */
 
 export const signupHandler = function (schema, request) {
-  const { email, password, ...rest } = JSON.parse(request.requestBody);
+  const { username, password, ...rest } = JSON.parse(request.requestBody);
   try {
-    // check if email already exists
-    const foundUser = schema.users.findBy({ email: email });
+    // check if username already exists
+    const foundUser = schema.users.findBy({ username: username });
     if (foundUser) {
       return new Response(
         422,
         {},
         {
-          errors: ["Email already exists"],
+          errors: ["Username already exists"],
         }
       );
     }
@@ -32,12 +32,15 @@ export const signupHandler = function (schema, request) {
       _id,
       createdAt: formatDate(),
       updatedAt: formatDate(),
-      email,
+      username,
       password,
       ...rest,
     };
     const createdUser = schema.users.create(newUser);
-    const encodedToken = sign({ _id, email }, process.env.REACT_APP_JWT_SECRET);
+    const encodedToken = sign(
+      { _id, username },
+      process.env.REACT_APP_JWT_SECRET
+    );
     return new Response(201, {}, { createdUser, encodedToken });
   } catch (error) {
     return new Response(
@@ -53,25 +56,27 @@ export const signupHandler = function (schema, request) {
 /**
  * This handler handles user login.
  * send POST Request at /api/auth/login
- * body contains {email, password}
+ * body contains {username, password}
  * */
 
 export const loginHandler = function (schema, request) {
-  const { email, password } = JSON.parse(request.requestBody);
+  const { username, password } = JSON.parse(request.requestBody);
   try {
-    const foundUser = schema.users.findBy({ email: email });
+    const foundUser = schema.users.findBy({ username: username });
     if (!foundUser) {
       return new Response(
         404,
         {},
         {
-          errors: ["Email not registered"],
+          errors: [
+            "The username you entered is not registered",
+          ],
         }
       );
     }
     if (password === foundUser.password) {
       const encodedToken = sign(
-        { _id: foundUser._id, email },
+        { _id: foundUser._id, username },
         process.env.REACT_APP_JWT_SECRET
       );
       return new Response(200, {}, { foundUser, encodedToken });
@@ -80,7 +85,9 @@ export const loginHandler = function (schema, request) {
       401,
       {},
       {
-        errors: ["Invalid Credentials"],
+        errors: [
+          "The credentials you entered are invalid",
+        ],
       }
     );
   } catch (error) {

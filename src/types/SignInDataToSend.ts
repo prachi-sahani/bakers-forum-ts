@@ -1,4 +1,4 @@
 export interface SignInDataToSend {
-  email: string;
+  username: string;
   password: string;
 }

@@ -14,18 +14,19 @@ import { signIn } from "../redux/slices/authenticationSlice";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { CustomSnackbar, FullscreenLoader } from "../components/index";
 import { FULFILLED, LOADING } from "../utilities/constants/api-status";
+import { RootState } from "../redux/store";
 
 export function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState({
-    emailError: "",
+    usernameError: "",
     passwordError: "",
   });
   const { authStatus, authError, authToken } = useAppSelector(
-    (state) => state.authentication
+    (state: RootState) => state.authentication
   );
   const dispatch = useAppDispatch();
 
@@ -46,12 +47,12 @@ export function SignIn() {
 
   const signInUser = (type: string) => {
     if (type === "user") {
-      if (!email || !password) {
+      if (!username || !password) {
         let updatedErrorObj = { ...error };
-        if (!email) {
+        if (!username) {
           updatedErrorObj = {
             ...updatedErrorObj,
-            emailError: "Required Field",
+            usernameError: "Required Field",
           };
         }
         if (!password) {
@@ -62,10 +63,10 @@ export function SignIn() {
         }
         setError(updatedErrorObj);
       } else {
-        dispatch(signIn({ email, password }));
+        dispatch(signIn({ username, password }));
       }
     } else if (type === "guest") {
-      dispatch(signIn({ email: "sample.user@email.com", password: "123456" }));
+      dispatch(signIn({ username: "sampleuser", password: "123456" }));
     }
   };
 
@@ -93,17 +94,17 @@ export function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
+              id="username"
+              label="Username"
+              name="username"
               autoComplete="off"
               autoFocus
-              value={email}
-              helperText={error.emailError}
-              error={error.emailError !== ""}
+              value={username}
+              helperText={error.usernameError}
+              error={error.usernameError !== ""}
               onChange={(e) => {
-                setEmail(e.target.value);
-                setError({ ...error, emailError: "" });
+                setUsername(e.target.value);
+                setError({ ...error, usernameError: "" });
               }}
             />
             <TextField

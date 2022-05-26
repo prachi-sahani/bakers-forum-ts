@@ -1,12 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { FULFILLED, IDLE, LOADING } from "../../utilities/constants/api-status";
+import { AuthInitialData } from "../../types/AuthInitialData";
+import { UserDetails } from "../../types/UserDetails";
+import {
+  ERROR,
+  FULFILLED,
+  IDLE,
+  LOADING,
+} from "../../utilities/constants/api-status";
 import {
   callSignIn,
   callSignUp,
 } from "../../utilities/services/authentication";
 
-const initialData = {
+const initialUserDetails: UserDetails = {
+  _id: "",
+  id: "",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  firstName: "",
+  lastName: "",
+  username: "",
+  password: "",
+};
+
+const initialData: AuthInitialData = {
   authToken: localStorage.getItem("token") || "",
+  userDetails:
+    JSON.parse(localStorage.getItem("user") || "{}") || initialUserDetails,
   authStatus: IDLE,
   authError: "",
 };
@@ -29,11 +49,16 @@ const authSlice = createSlice({
     });
     builder.addCase(signIn.fulfilled, (state, action) => {
       state.authStatus = FULFILLED;
-      state.authToken = action.payload;
+      state.authToken = action.payload.authToken;
+      state.userDetails = action.payload.userDetails;
       localStorage.setItem("token", state.authToken);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...state.userDetails, password: "***" })
+      );
     });
     builder.addCase(signIn.rejected, (state, action) => {
-      state.authStatus = "error";
+      state.authStatus = ERROR;
       state.authError = String(action.payload);
     });
     builder.addCase(signUp.pending, (state) => {
@@ -41,11 +66,16 @@ const authSlice = createSlice({
     });
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.authStatus = FULFILLED;
-      state.authToken = action.payload;
+      state.authToken = action.payload.authToken;
+      state.userDetails = action.payload.userDetails;
       localStorage.setItem("token", state.authToken);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...action.payload.userDetails, password: "***" })
+      );
     });
     builder.addCase(signUp.rejected, (state, action) => {
-      state.authStatus = "error";
+      state.authStatus = ERROR;
       state.authError = String(action.payload);
     });
   },

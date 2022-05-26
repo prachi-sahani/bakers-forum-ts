@@ -15,22 +15,23 @@ import { signUp } from "../redux/slices/authenticationSlice";
 import { SignUpDataToSend } from "../types/SignUpDataToSend";
 import { CustomSnackbar, FullscreenLoader } from "../components/index";
 import { FULFILLED, LOADING } from "../utilities/constants/api-status";
+import { RootState } from "../redux/store";
 
 export function SignUp() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { authStatus, authError, authToken } = useAppSelector(
-    (state) => state.authentication
+    (state: RootState) => state.authentication
   );
   const [formData, setFormData] = React.useState<SignUpDataToSend>({
-    email: "",
+    username: "",
     password: "",
     firstName: "",
     lastName: "",
   });
   const [error, setError] = React.useState({
-    emailError: "",
+    usernameError: "",
     passwordError: "",
     firstNameError: "",
     lastNameError: "",
@@ -44,7 +45,7 @@ export function SignUp() {
   React.useEffect(() => {
     if (authStatus === FULFILLED && authToken) {
       const lastState: any = location?.state;
-      const lastRoute: string = lastState?.from?.pathname || "/home";
+      const lastRoute: string = lastState?.from?.pathname || "/feed";
       navigate(lastRoute);
     }
   }, [authStatus]);
@@ -52,13 +53,13 @@ export function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
-      formData.email &&
+      formData.username &&
       formData.password &&
       formData.firstName &&
       formData.lastName
     ) {
       const dataToSend: SignUpDataToSend = {
-        email: formData.email,
+        username: formData.username,
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -146,16 +147,16 @@ export function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
+                  id="username"
+                  label="Username"
+                  name="username"
                   autoComplete="off"
-                  value={formData.email}
-                  helperText={error.emailError}
-                  error={error.emailError !== ""}
+                  value={formData.username}
+                  helperText={error.usernameError}
+                  error={error.usernameError !== ""}
                   onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value });
-                    setError({ ...error, emailError: "" });
+                    setFormData({ ...formData, username: e.target.value });
+                    setError({ ...error, usernameError: "" });
                   }}
                 />
               </Grid>

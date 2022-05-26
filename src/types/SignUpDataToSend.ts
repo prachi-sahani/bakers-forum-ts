@@ -1,6 +1,7 @@
 export interface SignUpDataToSend {
-  email: string;
+  // email: string;
   password: string;
   firstName: string;
   lastName: string;
+  username: string;
 }

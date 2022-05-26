@@ -51,7 +51,7 @@ export function LandingPage() {
           </Typography>
           <Typography variant="h6">
             Connect with bakers around the world and take your baking skills and
-            business to next level{" "}
+            business to next level
           </Typography>
         </Box>
         {authToken ? (
