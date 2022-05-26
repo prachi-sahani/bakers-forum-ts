@@ -41,7 +41,6 @@ const feedSlice = createSlice({
     builder.addCase(getQuestions.fulfilled, (state, action) => {
       state.questionStatus = FULFILLED;
       state.questions = [...action.payload];
-      console.log(state.questions);
     });
     builder.addCase(getQuestions.rejected, (state, action) => {
       state.questionError = String(action.payload);

@@ -27,16 +27,8 @@ export function Feed() {
     if (questions.length === 0) {
       dispatch(getQuestions());
     }
-    console.log("here");
   }, []);
   React.useEffect(() => {
-    console.log(
-      questions?.filter(
-        (ques: Question) => userDetails.following.includes(ques.username) ?? []
-      ),
-      userDetails.following
-    );
-
     setQuestionsToDisplay((value: Question[]) =>
       questions?.filter((ques: Question) =>
         userDetails.following.includes(ques.username)
@@ -48,7 +40,6 @@ export function Feed() {
       sx={{
         display: "flex",
         p: { md: 0, xs: 2 },
-        py: { md: 1 },
         gap: 2,
         pr: { md: 2 },
         flexDirection: { xs: "column-reverse", md: "row" },

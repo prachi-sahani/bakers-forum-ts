@@ -67,8 +67,6 @@ export function SignUp() {
         firstName: formData.firstName,
         lastName: formData.lastName,
       };
-      console.log(dataToSend);
-
       setFormData(dataToSend);
       dispatch(signUp(dataToSend));
     } else {
