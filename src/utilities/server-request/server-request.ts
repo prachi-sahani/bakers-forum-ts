@@ -10,8 +10,12 @@ function signUpUser(dataToSend: SignUpDataToSend) {
   return axios.post("/api/auth/signup", dataToSend);
 }
 
+function getUserData(id: string) {
+  return axios.get(`/api/users/${id}`);
+}
+
 function getAllQuestions() {
   return axios.get("/api/questions");
 }
 
-export { signInUser, signUpUser, getAllQuestions };
+export { signInUser, signUpUser, getUserData, getAllQuestions };

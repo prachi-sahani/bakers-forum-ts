@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authenticationSlice";
+import feedReducer from "./slices/feedSlice";
 
 export const store = configureStore({
   reducer: {
     authentication: authReducer,
+    feed: feedReducer,
   },
 });
 

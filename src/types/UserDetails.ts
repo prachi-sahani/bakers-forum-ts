@@ -7,4 +7,6 @@ export interface UserDetails{
     lastName:string;
     username:string
     password:string;
+    followers:string[],
+    following:string[],
 }

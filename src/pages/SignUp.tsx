@@ -29,6 +29,8 @@ export function SignUp() {
     password: "",
     firstName: "",
     lastName: "",
+    followers: [],
+    following: ["prachisahani"], // temporarily added dummy data to view post in user feed
   });
   const [error, setError] = React.useState({
     usernameError: "",
@@ -59,11 +61,14 @@ export function SignUp() {
       formData.lastName
     ) {
       const dataToSend: SignUpDataToSend = {
+        ...formData,
         username: formData.username,
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
       };
+      console.log(dataToSend);
+
       setFormData(dataToSend);
       dispatch(signUp(dataToSend));
     } else {
