@@ -12,13 +12,16 @@ import {
 } from "../utilities/material-ui/material-components";
 import { LogoutIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation } from "react-router-dom";
-import { useAppDispatch } from "../redux/customHook";
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { logout } from "../redux/slices/authenticationSlice";
+import { RootState } from "../redux/store";
 const settings = ["Explore", "Bookmarks", "Notifications", "Profile", "Logout"];
 
 export function Navbar() {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const {authToken, userDetails} = useAppSelector((state:RootState) => state.authentication)
+  
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -70,7 +73,7 @@ export function Navbar() {
             </Tooltip>
           </Box>
         )}
-        {location.pathname !== "/" && (
+        {authToken && (
           <Box
             sx={{
               flexGrow: 0,
@@ -82,9 +85,7 @@ export function Navbar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   sx={{ height: "2rem", width: "2rem" }}
-                  alt="User"
-                  src="/static/images/avatar/2.jpg"
-                />
+                >{userDetails.firstName[0]}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu

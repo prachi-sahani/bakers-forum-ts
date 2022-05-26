@@ -25,18 +25,16 @@ export function SignUp() {
     (state: RootState) => state.authentication
   );
   const [formData, setFormData] = React.useState<SignUpDataToSend>({
-    email: "",
+    username: "",
     password: "",
     firstName: "",
     lastName: "",
-    username: "",
   });
   const [error, setError] = React.useState({
-    emailError: "",
+    usernameError: "",
     passwordError: "",
     firstNameError: "",
     lastNameError: "",
-    usernameError: "",
   });
   React.useEffect(() => {
     // if user is already logged in and tries to access signup page, they will be redirected to previous page
@@ -55,17 +53,16 @@ export function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
-      formData.email &&
+      formData.username &&
       formData.password &&
       formData.firstName &&
       formData.lastName
     ) {
       const dataToSend: SignUpDataToSend = {
-        email: formData.email,
+        username: formData.username,
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
-        username: formData.username,
       };
       setFormData(dataToSend);
       dispatch(signUp(dataToSend));
@@ -160,23 +157,6 @@ export function SignUp() {
                   onChange={(e) => {
                     setFormData({ ...formData, username: e.target.value });
                     setError({ ...error, usernameError: "" });
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="off"
-                  value={formData.email}
-                  helperText={error.emailError}
-                  error={error.emailError !== ""}
-                  onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value });
-                    setError({ ...error, emailError: "" });
                   }}
                 />
               </Grid>

@@ -17,7 +17,6 @@ const initialUserDetails: UserDetails = {
   id: "",
   createdAt: new Date(),
   updatedAt: new Date(),
-  email: "",
   firstName: "",
   lastName: "",
   username: "",
