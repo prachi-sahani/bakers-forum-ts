@@ -66,7 +66,7 @@ export function SignIn() {
         dispatch(signIn({ username, password }));
       }
     } else if (type === "guest") {
-      dispatch(signIn({ username: "sampleuser", password: "123456" }));
+      dispatch(signIn({ username: "guestuser", password: "123456" }));
     }
   };
 

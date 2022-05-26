@@ -4,4 +4,6 @@ export interface SignUpDataToSend {
   firstName: string;
   lastName: string;
   username: string;
+  followers: string[];
+  following: string[];
 }

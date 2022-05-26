@@ -21,6 +21,8 @@ const initialUserDetails: UserDetails = {
   lastName: "",
   username: "",
   password: "",
+  followers: [],
+  following: [],
 };
 
 const initialData: AuthInitialData = {

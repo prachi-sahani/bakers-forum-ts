@@ -14,7 +14,7 @@ interface AddQuestionProp {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const tags = ["Business", "Neogcamp", "Invact", "Roc8", "MBA", "Technology"];
+const tags = ["Cake", "Baking", "Baking Tools", "Recipes", "Cake Decoration", "Pastry", "Donuts", "Breads", "Wheat Bread", "Cookies", "Business", "Icing", "Experience", "Bakers"];
 export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
   const handleClose = () => setOpen(false);
   return (

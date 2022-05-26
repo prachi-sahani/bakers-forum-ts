@@ -58,7 +58,8 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       server.logging = false;
       users.forEach((item) =>
-        server.create("user", { ...item, followers: [], following: [] })
+      // temporarily added dummy data for following to view the posts in user feed
+        server.create("user", { ...item, followers: [], following: ["prachisahani","zuberdunge"] })
       );
 
       questions.forEach((item) => {
