@@ -14,7 +14,7 @@ export function NoPostsMessage({ message }: { message: string }) {
     >
       <FeedOutlinedIcon sx={{ fontSize: 60 }} />
       <Typography variant="h6" component="h6">
-        {message}{" "}
+        {message}
       </Typography>
     </Box>
   );
