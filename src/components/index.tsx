@@ -1,8 +1,8 @@
 export { AddPostMobile } from "./AddPostMobile";
 export { AddQuestionModal } from "./AddQuestionModal";
 export { CustomSnackbar } from "./CustomSnackbar";
-export { DiscussionCard } from "./DiscussionCard";
-export { DiscussionCardsSection } from "./DiscussionCardsSection";
+export { QuestionCard } from "./QuestionCard";
+export { QuestionCardsSection } from "./QuestionCardsSection";
 export { FullscreenLoader } from "./FullscreenLoader";
 export { Navbar } from "./Navbar";
 export { RequireAuth } from "./RequireAuth";

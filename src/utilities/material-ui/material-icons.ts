@@ -7,6 +7,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
+import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 
 export {
   CommentOutlinedIcon,
@@ -17,5 +18,6 @@ export {
   LockOutlinedIcon,
   AddIcon,
   LogoutIcon,
-  CloseIcon
+  CloseIcon,
+  FeedOutlinedIcon
 };
