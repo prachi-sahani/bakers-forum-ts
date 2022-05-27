@@ -11,15 +11,7 @@ import { addVote } from "../redux/slices/feedSlice";
 import { RootState } from "../redux/store";
 import { Question } from "../types/Question";
 
-export function VoteSection({
-  votes,
-  id,
-  question,
-}: {
-  votes: Vote;
-  id: string;
-  question: Question;
-}) {
+export function VoteSection({ question }: { question: Question }) {
   const dispatch = useAppDispatch();
   const { authToken, userDetails } = useAppSelector(
     (state: RootState) => state.authentication
@@ -27,9 +19,9 @@ export function VoteSection({
   const updateVote = (type: string, key: string) => {
     // if question is already upvoted or downvoted
     if (question.votes[key as keyof Vote].includes(userDetails.username)) {
-      dispatch(addVote({ token: authToken, id, vote: "unvote" }));
+      dispatch(addVote({ token: authToken, id: question._id, vote: "unvote" }));
     } else {
-      dispatch(addVote({ token: authToken, id, vote: type }));
+      dispatch(addVote({ token: authToken, id: question._id, vote: type }));
     }
   };
 
@@ -71,7 +63,7 @@ export function VoteSection({
         </IconButton>
       </Tooltip>
       <Typography variant="body1" color="primary">
-        {votes.upvotedBy.length - votes.downvotedBy.length}
+        {question.votes.upvotedBy.length - question.votes.downvotedBy.length}
       </Typography>
       <Tooltip title={`Downvote by: ${getVoteTooltipText("downvotedBy")}`}>
         <IconButton

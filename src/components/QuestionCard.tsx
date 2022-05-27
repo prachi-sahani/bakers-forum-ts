@@ -74,11 +74,7 @@ export function QuestionCard({ question }: QuestionCardProp) {
   }, [addCommentAPIStatus]);
   return (
     <Card sx={{ display: "flex" }}>
-      <VoteSection
-        id={question._id}
-        votes={question.votes}
-        question={question}
-      />
+      <VoteSection question={question} />
       <Box sx={{ p: 1, px: { xs: 0.5 }, flexGrow: 1 }}>
         <CardHeader
           sx={{ p: 1 }}
