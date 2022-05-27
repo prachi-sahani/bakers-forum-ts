@@ -9,7 +9,6 @@ import {
 } from "../utilities/material-ui/material-icons";
 import {
   Box,
-  Button,
   Avatar,
   Card,
   CardActions,
@@ -25,11 +24,15 @@ import {
   ListItemText,
   Typography,
   TextField,
+  LoadingButton,
 } from "../utilities/material-ui/material-components";
-import { useAppSelector } from "../redux/customHook";
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { RootState } from "../redux/store";
 import { Question } from "../types/Question";
 import { VoteSection } from "./VoteSection";
+import { addComment, getVotes } from "../redux/slices/feedSlice";
+import { v4 as uuid } from "uuid";
+import { LOADING, FULFILLED } from "../utilities/constants/api-status";
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -50,15 +53,32 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export function QuestionCard({ question }: QuestionCardProp) {
   const [expanded, setExpanded] = React.useState(false);
-  const { userDetails } = useAppSelector(
+  const [comment, setComment] = React.useState("");
+  const [commentError, setCommentError] = React.useState("");
+  const dispatch = useAppDispatch();
+  const { userDetails, authToken } = useAppSelector(
     (state: RootState) => state.authentication
   );
+  const { addCommentAPIStatus } = useAppSelector(
+    (state: RootState) => state.feed
+  );
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  React.useEffect(() => {
+    if (addCommentAPIStatus === FULFILLED) {
+      setComment("");
+    }
+  }, [addCommentAPIStatus]);
   return (
     <Card sx={{ display: "flex" }}>
-      <VoteSection votes={question.votes} />
+      <VoteSection
+        id={question._id}
+        votes={question.votes}
+        question={question}
+      />
       <Box sx={{ p: 1, px: { xs: 0.5 }, flexGrow: 1 }}>
         <CardHeader
           sx={{ p: 1 }}
@@ -155,11 +175,40 @@ export function QuestionCard({ question }: QuestionCardProp) {
                       placeholder="Add a comment..."
                       variant="standard"
                       multiline
+                      value={comment}
                       sx={{ flexGrow: 1, fontSize: 14 }}
+                      error={commentError !== ""}
+                      helperText={commentError}
+                      onChange={(e) => {
+                        setComment(e.target.value);
+                        setCommentError("");
+                      }}
                     />
-                    <Button variant="text" size="small" sx={{ ml: "auto" }}>
+                    <LoadingButton
+                      loading={addCommentAPIStatus === LOADING}
+                      variant="text"
+                      size="small"
+                      sx={{ ml: "auto" }}
+                      onClick={() => {
+                        comment
+                          ? dispatch(
+                              addComment({
+                                token: authToken,
+                                id: question._id,
+                                commentData: {
+                                  _id: uuid(),
+                                  username: userDetails.username,
+                                  firstName: userDetails.firstName,
+                                  lastName: userDetails.lastName,
+                                  commentText: comment,
+                                },
+                              })
+                            )
+                          : setCommentError("Required");
+                      }}
+                    >
                       POST
-                    </Button>
+                    </LoadingButton>
                   </Typography>
                 }
               />

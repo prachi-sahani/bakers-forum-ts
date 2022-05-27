@@ -32,6 +32,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
@@ -80,6 +81,7 @@ export {
   ListItemAvatar,
   ListItemButton,
   ListItemText,
+  LoadingButton,
   Menu,
   MenuItem,
   Modal,

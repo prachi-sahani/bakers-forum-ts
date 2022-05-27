@@ -39,7 +39,6 @@ const usersSlice = createSlice({
     });
     builder.addCase(getUsers.rejected, (state, action) => {
       state.usersAPIStatus = FULFILLED;
-      console.log(action);
       state.usersAPIError = String(action.payload);
     });
   },
