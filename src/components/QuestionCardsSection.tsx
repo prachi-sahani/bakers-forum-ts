@@ -11,9 +11,10 @@ import { Filters } from "./Filters";
 import { Question } from "../types/Question";
 import { useAppSelector } from "../redux/customHook";
 import { RootState } from "../redux/store";
-import { FULFILLED, LOADING } from "../utilities/constants/api-status";
+import { ERROR, FULFILLED, LOADING } from "../utilities/constants/api-status";
 import { DataLoader } from "./DataLoader";
 import { NoPostsMessage } from "./NoPostsMessage";
+import { grey } from "../utilities/material-ui/material-colors";
 
 export function QuestionCardsSection({
   title,
@@ -76,9 +77,14 @@ export function QuestionCardsSection({
         questions?.map((question) => (
           <QuestionCard question={question} key={question._id} />
         ))}
-      {questionStatus === LOADING && <DataLoader />}
+      {questionStatus === LOADING && <DataLoader size={50} />}
       {questionStatus === FULFILLED && questions?.length === 0 && (
         <NoPostsMessage message="Start following fellow bakers to view their posts" />
+      )}
+      {questionStatus === ERROR && (
+        <Typography variant="body1" sx={{ color: grey[600] }}>
+          Some error occurred. Try reloading!
+        </Typography>
       )}
     </Box>
   );

@@ -1,21 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllQuestions } from "../../utilities/server-request/server-request";
-import { FULFILLED, IDLE, LOADING } from "../../utilities/constants/api-status";
+import {
+  ERROR,
+  FULFILLED,
+  IDLE,
+  LOADING,
+} from "../../utilities/constants/api-status";
 import { Question } from "../../types/Question";
-
-// payload creator callback takes thunkAPI(rejectWithValue) as second argument and hence 1st argument as void
-const callGetAllQuestions = async (_: void, { rejectWithValue }: any) => {
-  try {
-    const { data } = await getAllQuestions();
-    return data.questions;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data.errors[0]);
-  }
-};
+import { callGetAllQuestions } from "../../utilities/services/feed";
 
 interface FeedQuestionType {
   questions: Question[];
-  questionStatus: typeof IDLE | typeof FULFILLED | typeof LOADING;
+  questionStatus:
+    | typeof IDLE
+    | typeof FULFILLED
+    | typeof LOADING
+    | typeof ERROR;
   questionError: string;
 }
 
