@@ -81,7 +81,7 @@ export const addQuestionCommentHandler = function (schema, request) {
       updatedAt: formatDate(),
     };
     const question = schema.questions.findBy({ _id: questionId }).attrs;
-    question.comments.push(comment);
+    question.comments.unshift(comment);
     this.db.questions.update({ _id: questionId }, question);
     return new Response(201, {}, { comments: question.comments });
   } catch (error) {

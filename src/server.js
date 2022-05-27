@@ -119,7 +119,7 @@ export function makeServer({ environment = "development" } = {}) {
         getAnswerVotesHandler.bind(this)
       );
       // votes routes (private)
-      this.post("/votes/vote/:questionId", voteQuestionHandler.bind(this));
+      this.post("/votes/react/:questionId", voteQuestionHandler.bind(this));
       this.post(
         "/votes/vote/:questionId/:answerId",
         voteAnswerHandler.bind(this)
