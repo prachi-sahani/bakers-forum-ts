@@ -47,6 +47,18 @@ function addVote(token: string, id: string, dataToSend: string) {
   );
 }
 
+function followUser(token: string, id: string) {
+  return axios.post(`/api/users/follow/${id}`, {},{
+    headers: { authorization: token },
+  });
+}
+
+function unfollowUser(token: string, id: string) {
+  return axios.post(`/api/users/unfollow/${id}`,{}, {
+    headers: { authorization: token },
+  });
+}
+
 export {
   signInUser,
   signUpUser,
@@ -56,4 +68,6 @@ export {
   addComment,
   getAllVotes,
   addVote,
+  followUser,
+  unfollowUser,
 };

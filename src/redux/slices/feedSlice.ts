@@ -15,29 +15,13 @@ import {
 
 interface FeedQuestionType {
   questions: Question[];
-  questionStatus:
-    | typeof IDLE
-    | typeof FULFILLED
-    | typeof LOADING
-    | typeof ERROR;
+  questionStatus: string;
   questionError: string;
-  addCommentAPIStatus:
-    | typeof IDLE
-    | typeof FULFILLED
-    | typeof LOADING
-    | typeof ERROR;
+  addCommentAPIStatus: string;
   addCommentAPIError: string;
-  getVotesAPIStatus:
-    | typeof IDLE
-    | typeof FULFILLED
-    | typeof LOADING
-    | typeof ERROR;
+  getVotesAPIStatus: string;
   getVotesAPIError: string;
-  addVoteAPIStatus:
-    | typeof IDLE
-    | typeof FULFILLED
-    | typeof LOADING
-    | typeof ERROR;
+  addVoteAPIStatus: string;
   addVoteAPIError: string;
 }
 
