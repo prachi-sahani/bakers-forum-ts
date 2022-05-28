@@ -6,7 +6,39 @@ import {
   Tooltip,
 } from "../utilities/material-ui/material-components";
 import { Vote } from "../types/Vote";
-export function VoteSection({ votes }: { votes: Vote }) {
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
+import { addVote } from "../redux/slices/feedSlice";
+import { RootState } from "../redux/store";
+import { Question } from "../types/Question";
+
+export function VoteSection({ question }: { question: Question }) {
+  const dispatch = useAppDispatch();
+  const { authToken, userDetails } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
+  const updateVote = (type: string, key: string) => {
+    // if question is already upvoted or downvoted
+    if (question.votes[key as keyof Vote].includes(userDetails.username)) {
+      dispatch(addVote({ token: authToken, id: question._id, vote: "unvote" }));
+    } else {
+      dispatch(addVote({ token: authToken, id: question._id, vote: type }));
+    }
+  };
+
+  const getVoteTooltipText = (type: string) => {
+    const length = question.votes[type as keyof Vote].length;
+    // Downvoted/upvoted by: user1, user2, user3
+    let finalText =
+      length > 0
+        ? `@${question.votes[type as keyof Vote].slice(0, 3).join(", @")}`
+        : `None`;
+    // if number of votes more than 3 -> add  `+ "remaining users" more`
+    if (length > 3) {
+      finalText += ` + ${length - 3} more`;
+    }
+    return finalText;
+  };
+
   return (
     <CardActions
       disableSpacing
@@ -14,19 +46,35 @@ export function VoteSection({ votes }: { votes: Vote }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        px: { xs: 1 },
+        px: 0.5,
       }}
     >
-      <Tooltip title="Upvote">
-        <IconButton aria-label="upvote" color="primary" sx={{ px: { xs: 0 } }}>
+      <Tooltip title={`Upvoted by: ${getVoteTooltipText("upvotedBy")}`}>
+        <IconButton
+          aria-label="upvote"
+          color={
+            question.votes.upvotedBy.includes(userDetails.username)
+              ? "primary"
+              : "default"
+          }
+          onClick={() => updateVote("upvote", "upvotedBy")}
+        >
           <ChangeHistoryIcon sx={{ fontSize: "1.75rem" }} />
         </IconButton>
       </Tooltip>
       <Typography variant="body1" color="primary">
-        {votes.upvotedBy.length - votes.downvotedBy.length}
+        {question.votes.upvotedBy.length - question.votes.downvotedBy.length}
       </Typography>
-      <Tooltip title="Downvote">
-        <IconButton aria-label="downvote" sx={{ px: { xs: 0 } }}>
+      <Tooltip title={`Downvote by: ${getVoteTooltipText("downvotedBy")}`}>
+        <IconButton
+          color={
+            question.votes.downvotedBy.includes(userDetails.username)
+              ? "primary"
+              : "default"
+          }
+          aria-label="downvote"
+          onClick={() => updateVote("downvote", "downvotedBy")}
+        >
           <ChangeHistoryIcon
             sx={{ transform: "rotate(180deg)", fontSize: "1.75rem" }}
           />
