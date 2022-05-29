@@ -112,12 +112,6 @@ export function TrendingSection() {
             </ListItem>
           ))}
         </List>
-        {followUserAPIStatus === FULFILLED && (
-          <CustomSnackbar message={`Followed @${selectedUsername}`} />
-        )}
-        {unfollowUserAPIStatus === FULFILLED && (
-          <CustomSnackbar message={`Unfollowed @${selectedUsername}`} />
-        )}
         {followUserAPIStatus === ERROR && (
           <CustomSnackbar message={followUserAPIError} />
         )}

@@ -80,7 +80,7 @@ export function Navbar() {
           </Box>
         </Link>
 
-        {location.pathname === "/feed" && (
+        {(location.pathname === "/feed" || location.pathname === "/profile") && (
           <Box
             sx={{
               flexGrow: 0,

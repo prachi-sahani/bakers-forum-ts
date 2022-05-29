@@ -29,6 +29,7 @@ export function SignUp() {
     password: "",
     firstName: "",
     lastName: "",
+    bio: "",
     followers: [],
     following: ["prachisahani"], // temporarily added dummy data to view post in user feed
   });
@@ -66,6 +67,7 @@ export function SignUp() {
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
+        bio: formData.bio,
       };
       setFormData(dataToSend);
       dispatch(signUp(dataToSend));
@@ -160,6 +162,19 @@ export function SignUp() {
                   onChange={(e) => {
                     setFormData({ ...formData, username: e.target.value });
                     setError({ ...error, usernameError: "" });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="bio"
+                  label="Bio"
+                  name="bio"
+                  autoComplete="off"
+                  value={formData.bio}
+                  onChange={(e) => {
+                    setFormData({ ...formData, bio: e.target.value });
                   }}
                 />
               </Grid>

@@ -21,6 +21,7 @@ const initialUserDetails: UserDetails = {
   lastName: "",
   username: "",
   password: "",
+  bio:"",
   followers: [],
   following: [],
 };
