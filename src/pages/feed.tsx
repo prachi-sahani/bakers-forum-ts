@@ -56,12 +56,6 @@ export function Feed() {
       />
       <TrendingSection />
       <AddPostMobile handleOpen={handleOpen} />
-      {addQuestionAPIStatus === ERROR && (
-        <CustomSnackbar message={addQuestionAPIError} />
-      )}
-      {addQuestionAPIStatus === FULFILLED && (
-        <CustomSnackbar message="New post added!" />
-      )}
     </Box>
   );
 }
