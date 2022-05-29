@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Comment } from "../../types/Comment";
+import { NewQuestion } from "../../types/NewQuestion";
 import { SignInDataToSend } from "../../types/SignInDataToSend";
 import { SignUpDataToSend } from "../../types/SignUpDataToSend";
 
@@ -21,6 +22,16 @@ function getUserData(id: string) {
 
 function getAllQuestions() {
   return axios.get("/api/questions");
+}
+
+function addNewQuestion(token: string, dataToSend: NewQuestion) {
+  return axios.post(
+    "/api/questions/add",
+    { questionData: dataToSend },
+    {
+      headers: { authorization: token },
+    }
+  );
 }
 
 function addComment(token: string, id: string, dataToSend: Comment) {
@@ -48,15 +59,23 @@ function addVote(token: string, id: string, dataToSend: string) {
 }
 
 function followUser(token: string, id: string) {
-  return axios.post(`/api/users/follow/${id}`, {},{
-    headers: { authorization: token },
-  });
+  return axios.post(
+    `/api/users/follow/${id}`,
+    {},
+    {
+      headers: { authorization: token },
+    }
+  );
 }
 
 function unfollowUser(token: string, id: string) {
-  return axios.post(`/api/users/unfollow/${id}`,{}, {
-    headers: { authorization: token },
-  });
+  return axios.post(
+    `/api/users/unfollow/${id}`,
+    {},
+    {
+      headers: { authorization: token },
+    }
+  );
 }
 
 export {
@@ -65,6 +84,7 @@ export {
   getAllUsers,
   getUserData,
   getAllQuestions,
+  addNewQuestion,
   addComment,
   getAllVotes,
   addVote,
