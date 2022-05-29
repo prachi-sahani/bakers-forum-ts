@@ -1,6 +1,8 @@
 import { Comment } from "../../types/Comment";
+import { NewQuestion } from "../../types/NewQuestion";
 import {
   addComment,
+  addNewQuestion,
   addVote,
   getAllQuestions,
   getAllVotes,
@@ -42,11 +44,7 @@ const callGetAllVotes = async (id: string, { rejectWithValue }: any) => {
 };
 
 const callAddVote = async (
-  {
-    token,
-    id,
-    vote,
-  }: { token: string; id: string; vote: string },
+  { token, id, vote }: { token: string; id: string; vote: string },
   { rejectWithValue }: any
 ) => {
   try {
@@ -57,4 +55,22 @@ const callAddVote = async (
   }
 };
 
-export { callGetAllQuestions, callAddComment, callGetAllVotes, callAddVote };
+const callAddQuestion = async (
+  { token, question }: { token: string; question: NewQuestion },
+  { rejectWithValue }: any
+) => {
+  try {
+    const { data } = await addNewQuestion(token, question);
+    return data.questions;
+  } catch (err: any) {
+    return rejectWithValue(err.response.data.errors[0]);
+  }
+};
+
+export {
+  callGetAllQuestions,
+  callAddComment,
+  callGetAllVotes,
+  callAddVote,
+  callAddQuestion,
+};

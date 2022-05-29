@@ -8,6 +8,7 @@ import {
 import { Question } from "../../types/Question";
 import {
   callAddComment,
+  callAddQuestion,
   callAddVote,
   callGetAllQuestions,
   callGetAllVotes,
@@ -23,6 +24,8 @@ interface FeedQuestionType {
   getVotesAPIError: string;
   addVoteAPIStatus: string;
   addVoteAPIError: string;
+  addQuestionAPIStatus: string;
+  addQuestionAPIError: string;
 }
 
 const initialData: FeedQuestionType = {
@@ -35,6 +38,8 @@ const initialData: FeedQuestionType = {
   getVotesAPIError: "",
   addVoteAPIStatus: IDLE,
   addVoteAPIError: "",
+  addQuestionAPIStatus: IDLE,
+  addQuestionAPIError: "",
 };
 
 export const getQuestions = createAsyncThunk(
@@ -45,6 +50,10 @@ export const getQuestions = createAsyncThunk(
 export const addComment = createAsyncThunk("/feed/addComment", callAddComment);
 export const getVotes = createAsyncThunk("/feed/getVotes", callGetAllVotes);
 export const addVote = createAsyncThunk("/feed/addVote", callAddVote);
+export const addQuestion = createAsyncThunk(
+  "/feed/addQuestion",
+  callAddQuestion
+);
 
 const feedSlice = createSlice({
   name: "feed",
@@ -77,16 +86,6 @@ const feedSlice = createSlice({
       state.addCommentAPIStatus = ERROR;
       state.addCommentAPIError = String(action.payload);
     });
-    // builder.addCase(getVotes.pending, (state) => {
-    //   state.getVotesAPIStatus = LOADING;
-    // });
-    // builder.addCase(getVotes.fulfilled, (state, action) => {
-    //   state.getVotesAPIStatus = FULFILLED;
-    // });
-    // builder.addCase(getVotes.rejected, (state, action) => {
-    //   state.getVotesAPIStatus = ERROR;
-    //   state.getVotesAPIError = String(action.payload);
-    // });
     builder.addCase(addVote.pending, (state) => {
       state.addVoteAPIStatus = LOADING;
     });
@@ -100,6 +99,17 @@ const feedSlice = createSlice({
     });
     builder.addCase(addVote.rejected, (state, action) => {
       state.addVoteAPIStatus = ERROR;
+      state.addVoteAPIError = String(action.payload);
+    });
+    builder.addCase(addQuestion.pending, (state) => {
+      state.addQuestionAPIStatus = LOADING;
+    });
+    builder.addCase(addQuestion.fulfilled, (state, action) => {
+      state.addQuestionAPIStatus = FULFILLED;
+      state.questions = [...action.payload];
+    });
+    builder.addCase(addQuestion.rejected, (state, action) => {
+      state.addQuestionAPIStatus = ERROR;
       state.addVoteAPIError = String(action.payload);
     });
   },

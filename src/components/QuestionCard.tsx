@@ -30,7 +30,7 @@ import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { RootState } from "../redux/store";
 import { Question } from "../types/Question";
 import { VoteSection } from "./VoteSection";
-import { addComment, getVotes } from "../redux/slices/feedSlice";
+import { addComment } from "../redux/slices/feedSlice";
 import { v4 as uuid } from "uuid";
 import { LOADING, FULFILLED } from "../utilities/constants/api-status";
 interface ExpandMoreProps extends IconButtonProps {
