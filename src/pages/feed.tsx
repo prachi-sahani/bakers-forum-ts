@@ -4,20 +4,18 @@ import {
   TrendingSection,
   AddPostMobile,
   Sidenav,
-  CustomSnackbar,
 } from "../components/index";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { getQuestions } from "../redux/slices/feedSlice";
 import { RootState } from "../redux/store";
 import { Question } from "../types/Question";
-import { ERROR, FULFILLED } from "../utilities/constants/api-status";
 
 export function Feed() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const dispatch = useAppDispatch();
-  const { questions, addQuestionAPIStatus, addQuestionAPIError } =
+  const { questions } =
     useAppSelector((state: RootState) => state.feed);
   const [questionsToDisplay, setQuestionsToDisplay] = React.useState<
     Question[]
@@ -29,7 +27,7 @@ export function Feed() {
     }
   }, []);
   React.useEffect(() => {
-    // questions post by the accounts that the user follows and the ones that are not posted by the user
+    // questions posted by the accounts that the user follows and the ones that are not posted by the user
     // setQuestionsToDisplay((value: Question[]) =>
     //   questions?.filter((ques: Question) =>
     //     userDetails.following.includes(ques.username)
