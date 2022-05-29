@@ -36,6 +36,7 @@ export function TrendingSection() {
     (state: RootState) => state.authentication
   );
   const [usersToDisplay, setUsersToDisplay] = React.useState<UserDetails[]>([]);
+  const [selectedUsername, setSelectedUsername] = React.useState<string>("");
   React.useEffect(() => {
     if (usersAPIStatus === IDLE) {
       dispatch(getUsers());
@@ -80,10 +81,14 @@ export function TrendingSection() {
                   size="small"
                   variant="text"
                   sx={{ fontSize: 12, textTransform: "none" }}
-                  loading={unfollowUserAPIStatus === LOADING}
-                  onClick={() =>
-                    dispatch(unfollowUser({ token: authToken, id: item._id }))
+                  loading={
+                    unfollowUserAPIStatus === LOADING &&
+                    selectedUsername === item.username
                   }
+                  onClick={() => {
+                    setSelectedUsername(item.username);
+                    dispatch(unfollowUser({ token: authToken, id: item._id }));
+                  }}
                 >
                   Unfollow
                 </LoadingButton>
@@ -92,29 +97,33 @@ export function TrendingSection() {
                   size="small"
                   variant="text"
                   sx={{ fontSize: 12, textTransform: "none" }}
-                  onClick={() =>
-                    dispatch(followUser({ token: authToken, id: item._id }))
+                  onClick={() => {
+                    setSelectedUsername(item.username);
+                    dispatch(followUser({ token: authToken, id: item._id }));
+                  }}
+                  loading={
+                    followUserAPIStatus === LOADING &&
+                    selectedUsername === item.username
                   }
-                  loading={followUserAPIStatus === LOADING}
                 >
                   Follow +
                 </LoadingButton>
               )}
-              {followUserAPIStatus === FULFILLED && (
-                <CustomSnackbar message={`Followed @${item.username}`} />
-              )}
-              {unfollowUserAPIStatus === FULFILLED && (
-                <CustomSnackbar message={`Unfollowed @${item.username}`} />
-              )}
-              {followUserAPIStatus === ERROR && (
-                <CustomSnackbar message={followUserAPIError} />
-              )}
-              {unfollowUserAPIStatus === ERROR && (
-                <CustomSnackbar message={unfollowUserAPIError} />
-              )}
             </ListItem>
           ))}
         </List>
+        {followUserAPIStatus === FULFILLED && (
+          <CustomSnackbar message={`Followed @${selectedUsername}`} />
+        )}
+        {unfollowUserAPIStatus === FULFILLED && (
+          <CustomSnackbar message={`Unfollowed @${selectedUsername}`} />
+        )}
+        {followUserAPIStatus === ERROR && (
+          <CustomSnackbar message={followUserAPIError} />
+        )}
+        {unfollowUserAPIStatus === ERROR && (
+          <CustomSnackbar message={unfollowUserAPIError} />
+        )}
         {usersToDisplay.length === 0 && usersAPIStatus === FULFILLED && (
           <Typography variant="caption" sx={{ color: grey[600] }}>
             No users to display
