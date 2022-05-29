@@ -77,8 +77,6 @@ const usersSlice = createSlice({
       state.unfollowUserAPIStatus = LOADING;
     });
     builder.addCase(unfollowUser.fulfilled, (state, action) => {
-      console.log(action);
-      
       state.unfollowUserAPIStatus = FULFILLED;
       state.users = state.users.map((user) => {
         if (user._id === action.payload.user._id) {

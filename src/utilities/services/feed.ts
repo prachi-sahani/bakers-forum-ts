@@ -61,12 +61,8 @@ const callAddQuestion = async (
 ) => {
   try {
     const { data } = await addNewQuestion(token, question);
-    console.log(data);
-
     return data.questions;
   } catch (err: any) {
-    console.log(err);
-
     return rejectWithValue(err.response.data.errors[0]);
   }
 };
