@@ -96,8 +96,7 @@ export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
     if (
       addQuestionData.questionTitle &&
       addQuestionData.questionText &&
-      addQuestionData.tags.length <= 3 &&
-      addQuestionData.tags.length > 0
+      addQuestionData.tags.length <= 3
     ) {
       dispatch(addQuestion({ token: authToken, question: addQuestionData }));
     } else {
@@ -109,11 +108,6 @@ export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
             updatedErrorObj = {
               ...updatedErrorObj,
               tagsError: "Upto three tags allowed",
-            };
-          } else if (addQuestionData.tags.length === 0) {
-            updatedErrorObj = {
-              ...updatedErrorObj,
-              tagsError: "Required",
             };
           }
         } else {
