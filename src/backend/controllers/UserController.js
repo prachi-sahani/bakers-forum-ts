@@ -92,20 +92,23 @@ export const followUserHandler = function (schema, request) {
       );
     }
     const isFollowing = user.following.some(
-      (currUser) => currUser._id === followUser._id
+      (currUser) => currUser === followUser.username
     );
-
     if (isFollowing) {
-      return new Response(400, {}, { errors: ["User Already following"] });
+      return new Response(
+        400,
+        {},
+        { errors: [`You already follow @${followUser.username}.`] }
+      );
     }
 
     const updatedUser = {
       ...user,
-      following: [...user.following, { ...followUser }],
+      following: [...user.following, followUser.username],
     };
     const updatedFollowUser = {
       ...followUser,
-      followers: [...followUser.followers, { ...user }],
+      followers: [...followUser.followers, user.username],
     };
     this.db.users.update(
       { _id: user._id },
@@ -153,23 +156,27 @@ export const unfollowUserHandler = function (schema, request) {
       );
     }
     const isFollowing = user.following.some(
-      (currUser) => currUser._id === followUser._id
+      (currUser) => currUser === followUser.username
     );
 
     if (!isFollowing) {
-      return new Response(400, {}, { errors: ["User already not following"] });
+      return new Response(
+        400,
+        {},
+        { errors: [`You do not follow @${followUser.username}`] }
+      );
     }
 
     const updatedUser = {
       ...user,
       following: user.following.filter(
-        (currUser) => currUser._id !== followUser._id
+        (currUser) => currUser !== followUser.username
       ),
     };
     const updatedFollowUser = {
       ...followUser,
       followers: followUser.followers.filter(
-        (currUser) => currUser._id !== user._id
+        (currUser) => currUser !== user.username
       ),
     };
     this.db.users.update(

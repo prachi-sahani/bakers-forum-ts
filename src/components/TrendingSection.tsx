@@ -1,7 +1,7 @@
 import { grey } from "../utilities/material-ui/material-colors";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
-import { getUsers } from "../redux/slices/usersSlice";
+import { followUser, getUsers, unfollowUser } from "../redux/slices/usersSlice";
 import { RootState } from "../redux/store";
 import { UserDetails } from "../types/UserDetails";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../utilities/constants/api-status";
 import {
   Box,
-  Button,
+  LoadingButton,
   List,
   ListItem,
   ListItemText,
@@ -20,13 +20,19 @@ import {
   Typography,
 } from "../utilities/material-ui/material-components";
 import { DataLoader } from "./DataLoader";
+import { CustomSnackbar } from "./CustomSnackbar";
 
 export function TrendingSection() {
   const dispatch = useAppDispatch();
-  const { users, usersAPIStatus } = useAppSelector(
-    (state: RootState) => state.users
-  );
-  const { userDetails } = useAppSelector(
+  const {
+    users,
+    usersAPIStatus,
+    followUserAPIStatus,
+    unfollowUserAPIStatus,
+    followUserAPIError,
+    unfollowUserAPIError,
+  } = useAppSelector((state: RootState) => state.users);
+  const { userDetails, authToken } = useAppSelector(
     (state: RootState) => state.authentication
   );
   const [usersToDisplay, setUsersToDisplay] = React.useState<UserDetails[]>([]);
@@ -35,6 +41,7 @@ export function TrendingSection() {
       dispatch(getUsers());
     }
   }, []);
+
   React.useEffect(() => {
     setUsersToDisplay(
       users.filter(
@@ -44,6 +51,14 @@ export function TrendingSection() {
       )
     );
   }, [users]);
+
+  const isFollowing = (username: string) => {
+    // using userdetails from storage coz it has the updated data, once the user refreshes, state will also get updated - this is done to ensure that user can unfollow after following them
+    return JSON.parse(localStorage.getItem("user") || "{}").following.includes(
+      username
+    );
+  };
+
   return (
     <Box sx={{ p: 1, minWidth: "20%" }}>
       <OutlinedInput
@@ -60,13 +75,43 @@ export function TrendingSection() {
           {usersToDisplay.map((item, index) => (
             <ListItem sx={{ p: 0 }} key={index}>
               <ListItemText secondary={`@${item.username}`} />
-              <Button
-                size="small"
-                variant="text"
-                sx={{ fontSize: 12, textTransform: "none" }}
-              >
-                Follow +
-              </Button>
+              {isFollowing(item.username) ? (
+                <LoadingButton
+                  size="small"
+                  variant="text"
+                  sx={{ fontSize: 12, textTransform: "none" }}
+                  loading={unfollowUserAPIStatus === LOADING}
+                  onClick={() =>
+                    dispatch(unfollowUser({ token: authToken, id: item._id }))
+                  }
+                >
+                  Unfollow
+                </LoadingButton>
+              ) : (
+                <LoadingButton
+                  size="small"
+                  variant="text"
+                  sx={{ fontSize: 12, textTransform: "none" }}
+                  onClick={() =>
+                    dispatch(followUser({ token: authToken, id: item._id }))
+                  }
+                  loading={followUserAPIStatus === LOADING}
+                >
+                  Follow +
+                </LoadingButton>
+              )}
+              {followUserAPIStatus === FULFILLED && (
+                <CustomSnackbar message={`Followed @${item.username}`} />
+              )}
+              {unfollowUserAPIStatus === FULFILLED && (
+                <CustomSnackbar message={`Unfollowed @${item.username}`} />
+              )}
+              {followUserAPIStatus === ERROR && (
+                <CustomSnackbar message={followUserAPIError} />
+              )}
+              {unfollowUserAPIStatus === ERROR && (
+                <CustomSnackbar message={unfollowUserAPIError} />
+              )}
             </ListItem>
           ))}
         </List>

@@ -11,8 +11,7 @@ export const requiresAuth = function (request) {
   if (decodedToken) {
     const user = this.db.users.findBy({ username: decodedToken.username });
     if (user) {
-      const { _id, username } = user;
-      return { _id, username };
+      return user;
     }
   }
   return new Response(
