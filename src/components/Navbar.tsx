@@ -11,17 +11,40 @@ import {
   Typography,
 } from "../utilities/material-ui/material-components";
 import { LogoutIcon } from "../utilities/material-ui/material-icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { logout } from "../redux/slices/authenticationSlice";
 import { RootState } from "../redux/store";
-const settings = ["Explore", "Bookmarks", "Notifications", "Profile", "Logout"];
-
+const dropDownItem = [
+  {
+    title: "Feed",
+    route: "/feed",
+  },
+  {
+    title: "Explore",
+    route: "/explore",
+  },
+  {
+    title: "Bookmarks",
+    route: "/bookmarks",
+  },
+  {
+    title: "Notifications",
+    route: "/notifications",
+  },
+  {
+    title: "Profile",
+    route: "/profile",
+  },
+];
 export function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {authToken, userDetails} = useAppSelector((state:RootState) => state.authentication)
-  
+  const { authToken, userDetails } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -83,9 +106,9 @@ export function Navbar() {
           >
             <Tooltip title="Menu">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  sx={{ height: "2rem", width: "2rem" }}
-                >{userDetails.firstName[0]}</Avatar>
+                <Avatar sx={{ height: "2rem", width: "2rem" }}>
+                  {userDetails.firstName[0]}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -104,15 +127,33 @@ export function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={handleCloseUserMenu}
-                  sx={{ pr: 3 }}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {dropDownItem.map(
+                (item) =>
+                  location.pathname !== item.route && (
+                    <MenuItem
+                      component="button"
+                      key={item.title}
+                      onClick={() => {
+                        navigate(item.route);
+                        handleCloseUserMenu();
+                      }}
+                      sx={{ pr: 3 }}
+                    >
+                      <Typography textAlign="center">{item.title}</Typography>
+                    </MenuItem>
+                  )
+              )}
+              <MenuItem
+                component="button"
+                key="Logout"
+                onClick={() => {
+                  dispatch(logout());
+                  handleCloseUserMenu();
+                }}
+                sx={{ pr: 3 }}
+              >
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         )}
