@@ -1,46 +1,96 @@
-# Getting Started with Create React App
+## [Bakers' Forum - A Forum App](https://bakers-forum.vercel.app/)
+![Bakers' Forum](https://user-images.githubusercontent.com/64582473/171004577-ff3d7c24-b75a-4aff-ac4c-ef7a635b90b7.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Table of contents ###
+- [About Bakers' Forum](#about)
+- [Features and demo](#features)
+- [Technology and libraries used](#tech)
+- [Pre-requisites and project setup(in local)](#setup)
+- [Highlights](#highlights)
+- [Let us connect](#connect)
 
-In the project directory, you can run:
 
-### `npm start`
+<a name="about"></a>
+### About Bakers' Forum ###
+**[Bakers' Forum](https://bakers-forum.vercel.app/)** -  a forum app for the people to connect and share their baking storied, recipes etc.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<a name="features"></a>
+### Features and demo ###
+- **[Landing Page](https://bakers-forum.vercel.app/)** - includes a CTA button to join the community
+- **[Feed Page](https://bakers-forum.vercel.app/feed)** - user feed(private page). Users can
+  - view questions posted by accounts they follow
+  - upvote/downvote the questions
+  - comment on the questions
+  - follow/unfollow people 
+  - create new post
+  - rest of the features will be include with time
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **[User Profile](https://bakers-forum.vercel.app/profile)** - user profile. Users can
+  - view questions posted by them
+  - follow/unfollow users
+  - view their basic details
+  - edit profile feature is under development
 
-### `npm test`
+ - **[Authentication](https://bakers-forum.vercel.app/signin)** - User can create a new account(sign up), sign in, sign in as guest and logout.
+ - Several other pages and functionalities like **explore page**, **bookmarking the question**, **bookmarks pages**, **individual question page**, **individual user profiles page**, **share feature for questions** will be included very soon. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+**Glimpses**:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003569-c298d0fb-6bd4-4e55-96d6-c6baf4207efa.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003617-e1d6dc74-3260-4738-a8a9-ca157f2807f8.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003663-2233bc30-dfa4-41b6-85d0-186e48f995ea.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003735-22251960-5454-42c6-8f9e-ca2b4e2184c0.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003835-595fdd21-f4bb-4283-b26b-31b547185a4d.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003902-90cf5172-98b6-4cc6-b697-43826e3be8fe.png">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<a name="tech"></a>
+### Technologies and libraries used ###
+- [ReactJS](https://reactjs.org/docs/getting-started.html)
+- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
+- [Typescript](https://www.typescriptlang.org/docs/)
+- [Material UI](https://mui.com/)
+- [Mockbee APIs](https://mockbee.netlify.app/)
+- [React Router](https://reactrouter.com/docs/en/v6/getting-started/overview)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<a name="highlights"></a>
+### Highlights ###
+- **Responsiveness** - This app is completely responsive and can be accessed in all kind of devices.
+-  Proper messages for **error/exception handling** across the application
+-  Use of **loader** to show status of tasks
 
-### `npm run eject`
+<a name="setup"></a>
+### Pre-requisites and project setup(in local) ###
+#### Step 1 ####
+Install [NodeJs](https://nodejs.org/en/)(if not already installed)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Step 2 ####
+Clone dev branch of this repo to local using:
+   
+     git clone https://github.com/prachi-sahani/bakers-forum-ts.git -b dev
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Step 3 ####
+Go into the project folder
+   
+     cd project-name 
+     
+#### Step 4 ####
+Install all the npm packages
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+     npm install 
+     
+#### Step 5 ####
+Run the application using:
+   
+     npm start 
+     
+The application runs on **localhost:3000**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<a name="connect"></a>
+### Let us connect ###
+[<img src="https://user-images.githubusercontent.com/64582473/162154693-eaf76505-59e8-4b6d-8e03-5cac4cd29d5d.png" width="30" height="30">](https://www.linkedin.com/in/prachi-sahani/) &nbsp;
+[<img src="https://user-images.githubusercontent.com/64582473/162155893-3e273e1a-4a29-47e2-8e39-06b45ab6f6eb.png" width="30" height="30">](https://twitter.com/prachi_sahani07) &nbsp;
+[<img src="https://user-images.githubusercontent.com/64582473/162157812-3e1d6b9b-7729-4137-99cb-8337d6396472.png" width="30" height="30">](https://github.com/prachi-sahani) &nbsp;
+[<img src="https://user-images.githubusercontent.com/64582473/171005454-3c5b4d06-6fb4-492e-8db5-44ca3419d467.png" width="30" height="30">](https://prachi-sahani.hashnode.dev/)
