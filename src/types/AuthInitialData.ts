@@ -5,4 +5,6 @@ export interface AuthInitialData {
   userDetails: UserDetails;
   authStatus: string;
   authError: string;
+  editUserAPIStatus: string;
+  editUserAPIError: string;
 }

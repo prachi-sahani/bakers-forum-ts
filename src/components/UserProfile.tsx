@@ -6,7 +6,11 @@ import {
 } from "../utilities/material-ui/material-components";
 import { grey } from "../utilities/material-ui/material-colors";
 import { UserDetails } from "../types/UserDetails";
+import { EditProfile } from "./EditProfile";
+import React from "react";
 export function UserProfile({ user }: { user: UserDetails }) {
+  const [openEditProfile, setOpenEditProfile] = React.useState(false);
+  const openEditModal = () => setOpenEditProfile(true);
   return (
     <Box
       sx={{
@@ -45,9 +49,19 @@ export function UserProfile({ user }: { user: UserDetails }) {
           {user.following.length} following
         </Typography>
       </Box>
-      <Button variant="outlined" size="small" sx={{ textTransform: "none" }}>
+      <Button
+        variant="outlined"
+        size="small"
+        sx={{ textTransform: "none" }}
+        onClick={openEditModal}
+      >
         Edit Profile
       </Button>
+      <EditProfile
+        openEditProfile={openEditProfile}
+        setOpenEditProfile={setOpenEditProfile}
+        user={user}
+      />
       <Typography variant="body2" sx={{ color: grey[600] }} textAlign="center">
         {user.bio}
       </Typography>

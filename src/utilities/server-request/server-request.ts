@@ -20,6 +20,16 @@ function getUserData(id: string) {
   return axios.get(`/api/users/${id}`);
 }
 
+function editUserData(token: string, dataToSend: SignUpDataToSend) {
+  return axios.post(
+    `/api/users/edit`,
+    { userData: dataToSend },
+    {
+      headers: { authorization: token },
+    }
+  );
+}
+
 function getAllQuestions() {
   return axios.get("/api/questions");
 }
@@ -83,6 +93,7 @@ export {
   signUpUser,
   getAllUsers,
   getUserData,
+  editUserData,
   getAllQuestions,
   addNewQuestion,
   addComment,

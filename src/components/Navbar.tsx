@@ -80,7 +80,8 @@ export function Navbar() {
           </Box>
         </Link>
 
-        {(location.pathname === "/feed" || location.pathname === "/profile") && (
+        {(location.pathname === "/feed" ||
+          location.pathname === "/profile") && (
           <Box
             sx={{
               flexGrow: 0,
@@ -137,7 +138,7 @@ export function Navbar() {
                         navigate(item.route);
                         handleCloseUserMenu();
                       }}
-                      sx={{ pr: 3 }}
+                      sx={{ pr: 3, width: "100%" }}
                     >
                       <Typography textAlign="center">{item.title}</Typography>
                     </MenuItem>

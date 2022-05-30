@@ -11,6 +11,8 @@ import {
   callGetAllUser,
   callUnfollowUser,
 } from "../../utilities/services/users";
+import { Buffer } from 'buffer';
+
 interface UsersState {
   users: UserDetails[];
   usersAPIStatus: string;
@@ -69,7 +71,7 @@ const usersSlice = createSlice({
       });
       localStorage.setItem(
         "user",
-        JSON.stringify({ ...action.payload.user, password: "***" })
+        JSON.stringify({ ...action.payload.user, password: Buffer.from(action.payload.user.password).toString('base64') })
       );
     });
     builder.addCase(followUser.rejected, (state, action) => {
@@ -92,7 +94,7 @@ const usersSlice = createSlice({
       });
       localStorage.setItem(
         "user",
-        JSON.stringify({ ...action.payload.user, password: "***" })
+        JSON.stringify({ ...action.payload.user, password:Buffer.from(action.payload.user.password).toString('base64')})
       );
     });
     builder.addCase(unfollowUser.rejected, (state, action) => {
