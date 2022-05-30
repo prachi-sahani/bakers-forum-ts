@@ -17,6 +17,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
     "axios": "^0.27.2",
+    "buffer": "^6.0.3",
     "cra-template-mockbee-forum-app": "^1.2.0",
     "dayjs": "^1.11.2",
     "jwt-decode": "^3.1.2",
