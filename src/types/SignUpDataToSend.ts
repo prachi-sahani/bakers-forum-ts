@@ -4,6 +4,7 @@ export interface SignUpDataToSend {
   firstName: string;
   lastName: string;
   username: string;
+  bio: string;
   followers: string[];
   following: string[];
 }

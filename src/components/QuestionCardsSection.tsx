@@ -15,6 +15,7 @@ import { ERROR, FULFILLED, LOADING } from "../utilities/constants/api-status";
 import { DataLoader } from "./DataLoader";
 import { NoPostsMessage } from "./NoPostsMessage";
 import { grey } from "../utilities/material-ui/material-colors";
+import { useLocation } from "react-router-dom";
 
 export function QuestionCardsSection({
   title,
@@ -23,6 +24,7 @@ export function QuestionCardsSection({
   title: string;
   questions: Question[] | null;
 }) {
+  const location = useLocation();
   const { questionStatus } = useAppSelector((state: RootState) => state.feed);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -52,7 +54,7 @@ export function QuestionCardsSection({
         }}
       >
         <Typography variant="h6">{title}</Typography>
-        {questions && questions?.length > 0 && (
+        {questions && questions?.length > 0 && location.pathname === "/feed" && (
           <React.Fragment>
             <Tooltip title="Filters">
               <IconButton
@@ -78,9 +80,16 @@ export function QuestionCardsSection({
           <QuestionCard question={question} key={question._id} />
         ))}
       {questionStatus === LOADING && <DataLoader size={50} />}
-      {questionStatus === FULFILLED && questions?.length === 0 && (
-        <NoPostsMessage message="Start following fellow bakers to view their posts" />
-      )}
+      {questionStatus === FULFILLED &&
+        questions?.length === 0 &&
+        location.pathname === "/feed" && (
+          <NoPostsMessage message="Start following fellow bakers to view their posts" />
+        )}
+      {questionStatus === FULFILLED &&
+        questions?.length === 0 &&
+        location.pathname === "/profile" && (
+          <NoPostsMessage message="No posts found" />
+        )}
       {questionStatus === ERROR && (
         <Typography variant="body1" sx={{ color: grey[600] }}>
           Some error occurred. Try reloading!

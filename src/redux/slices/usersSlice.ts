@@ -67,7 +67,10 @@ const usersSlice = createSlice({
         }
         return user;
       });
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...action.payload.user, password: "***" })
+      );
     });
     builder.addCase(followUser.rejected, (state, action) => {
       state.followUserAPIStatus = ERROR;
@@ -87,7 +90,10 @@ const usersSlice = createSlice({
         }
         return user;
       });
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...action.payload.user, password: "***" })
+      );
     });
     builder.addCase(unfollowUser.rejected, (state, action) => {
       state.unfollowUserAPIStatus = ERROR;

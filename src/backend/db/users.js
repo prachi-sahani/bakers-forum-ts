@@ -15,6 +15,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "Full time Baker || Growing with Bakers' Forum || Exploring self",
   },
   {
     _id: uuid(),
@@ -24,6 +25,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "Guest user || Member with Bakers' Community ",
   },
   {
     _id: uuid(),
@@ -33,6 +35,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "Sample User Bio",
   },
   {
     _id: uuid(),
@@ -42,6 +45,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "Software engineer by profession || Baker by passion",
   },
   {
     _id: uuid(),
@@ -51,6 +55,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "I love fruit cakes.",
   },
   {
     _id: uuid(),
@@ -60,6 +65,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "",
   },
   {
     _id: uuid(),
@@ -69,6 +75,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "Full time Baker || Growing with Bakers' Forum || Exploring self",
   },
   {
     _id: uuid(),
@@ -78,6 +85,7 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "",
   },
   {
     _id: uuid(),
@@ -87,5 +95,6 @@ export const users = [
     password: "123456",
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    bio: "21 | he/him | Your Friendly Neighborhood Baker",
   },
 ];

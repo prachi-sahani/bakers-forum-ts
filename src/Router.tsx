@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Feed, SignUp, SignIn, LandingPage } from "./pages/index";
+import { Feed, SignUp, SignIn, LandingPage, Profile } from "./pages/index";
 import { RequireAuth } from "./components/index";
 
 export function Router() {
@@ -12,6 +12,14 @@ export function Router() {
         element={
           <RequireAuth>
             <Feed />
+          </RequireAuth>
+        }
+      ></Route>
+      <Route
+        path="/profile"
+        element={
+          <RequireAuth>
+            <Profile />
           </RequireAuth>
         }
       ></Route>
