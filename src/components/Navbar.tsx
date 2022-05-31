@@ -63,12 +63,12 @@ export function Navbar() {
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar disableGutters variant="dense" sx={{ px: 2 }}>
-        <Link to="/">
+        <Link to="/explore">
           <Box sx={{ display: { xs: "none", md: "flex" }, height: "2rem" }}>
             <img src="assets/logo.png" alt="Bakers' Forum" />
           </Box>
         </Link>
-        <Link to="/">
+        <Link to="/explore">
           <Box
             sx={{
               flexGrow: 1,
