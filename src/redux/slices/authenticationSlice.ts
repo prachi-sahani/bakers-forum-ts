@@ -10,7 +10,9 @@ import {
 import {
   callSignIn,
   callSignUp,
+  callEditUser,
 } from "../../utilities/services/authentication";
+import { Buffer } from "buffer";
 
 const initialUserDetails: UserDetails = {
   _id: "",
@@ -21,7 +23,7 @@ const initialUserDetails: UserDetails = {
   lastName: "",
   username: "",
   password: "",
-  bio:"",
+  bio: "",
   followers: [],
   following: [],
 };
@@ -32,10 +34,16 @@ const initialData: AuthInitialData = {
     JSON.parse(localStorage.getItem("user") || "{}") || initialUserDetails,
   authStatus: IDLE,
   authError: "",
+  editUserAPIStatus: IDLE,
+  editUserAPIError: "",
 };
 
 export const signIn = createAsyncThunk("authentication/signIn", callSignIn);
 export const signUp = createAsyncThunk("authentication/signUp", callSignUp);
+export const editUser = createAsyncThunk(
+  "authentication/editUser",
+  callEditUser
+);
 
 const authSlice = createSlice({
   name: "authentication",
@@ -53,12 +61,15 @@ const authSlice = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       state.authStatus = FULFILLED;
       state.authToken = action.payload.authToken;
-      state.userDetails = action.payload.userDetails;
+      // encode password
+      state.userDetails = {
+        ...action.payload.userDetails,
+        password: Buffer.from(action.payload.userDetails.password).toString(
+          "base64"
+        ),
+      };
       localStorage.setItem("token", state.authToken);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ ...state.userDetails, password: "***" })
-      );
+      localStorage.setItem("user", JSON.stringify(state.userDetails));
     });
     builder.addCase(signIn.rejected, (state, action) => {
       state.authStatus = ERROR;
@@ -70,16 +81,35 @@ const authSlice = createSlice({
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.authStatus = FULFILLED;
       state.authToken = action.payload.authToken;
-      state.userDetails = action.payload.userDetails;
+      // encode password
+      state.userDetails = {
+        ...action.payload.userDetails,
+        password: Buffer.from(action.payload.userDetails.password).toString(
+          "base64"
+        ),
+      };
       localStorage.setItem("token", state.authToken);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ ...action.payload.userDetails, password: "***" })
-      );
+      localStorage.setItem("user", JSON.stringify(state.userDetails));
     });
     builder.addCase(signUp.rejected, (state, action) => {
       state.authStatus = ERROR;
       state.authError = String(action.payload);
+    });
+    builder.addCase(editUser.pending, (state) => {
+      state.editUserAPIStatus = LOADING;
+    });
+    builder.addCase(editUser.fulfilled, (state, action) => {
+      state.editUserAPIStatus = FULFILLED;
+      // encode password
+      state.userDetails = {
+        ...action.payload,
+        password: Buffer.from(action.payload.password).toString("base64"),
+      };
+      localStorage.setItem("user", JSON.stringify(state.userDetails));
+    });
+    builder.addCase(editUser.rejected, (state, action) => {
+      state.editUserAPIStatus = ERROR;
+      state.editUserAPIError = String(action.payload);
     });
   },
 });

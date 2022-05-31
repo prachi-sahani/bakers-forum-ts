@@ -15,9 +15,8 @@ export function Profile() {
     <Box
       sx={{
         display: "flex",
-        p: { md: 0, xs: 2 },
+        p: { md: "0 1rem 0 0", xs: "1rem" },
         gap: 2,
-        pr: { md: 2 },
         flexDirection: { xs: "column-reverse", md: "row" },
       }}
       component="main"

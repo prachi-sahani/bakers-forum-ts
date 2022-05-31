@@ -1,6 +1,7 @@
 import { SignInDataToSend } from "../../types/SignInDataToSend";
 import { SignUpDataToSend } from "../../types/SignUpDataToSend";
 import {
+  editUserData,
   getUserData,
   signInUser,
   signUpUser,
@@ -32,4 +33,16 @@ const callSignUp = async (
   }
 };
 
-export { callSignIn, callSignUp };
+const callEditUser = async (
+  { token, dataToSend }: { token: string; dataToSend: SignUpDataToSend },
+  { rejectWithValue }: any
+) => {
+  try {
+    const { data } = await editUserData(token, dataToSend);
+    return data.user;
+  } catch (err: any) {
+    return rejectWithValue(err.response.data.errors[0]);
+  }
+};
+
+export { callSignIn, callSignUp, callEditUser };
