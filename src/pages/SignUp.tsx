@@ -39,12 +39,7 @@ export function SignUp() {
     firstNameError: "",
     lastNameError: "",
   });
-  React.useEffect(() => {
-    // if user is already logged in and tries to access signup page, they will be redirected to previous page
-    if (authToken) {
-      navigate(-1);
-    }
-  }, []);
+
   React.useEffect(() => {
     if (authStatus === FULFILLED && authToken) {
       const lastState: any = location?.state;
