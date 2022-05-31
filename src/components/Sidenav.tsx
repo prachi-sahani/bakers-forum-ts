@@ -8,7 +8,9 @@ import {
 } from "../utilities/material-ui/material-components";
 import React from "react";
 import { AddQuestionModal } from "./AddQuestionModal";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/customHook";
+import { RootState } from "../redux/store";
 
 const sidenavItem = [
   {
@@ -48,6 +50,16 @@ export function Sidenav({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { authToken } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
+
+  const createNewPost = () => {
+    authToken
+      ? handleOpen()
+      : navigate("/signin", { state: { from: location } });
+  };
   return (
     <Box sx={{ flexShrink: 0, display: { xs: "none", md: "block" } }}>
       <Box sx={{ overflow: "auto" }}>
@@ -70,7 +82,7 @@ export function Sidenav({
             </Link>
           ))}
         </List>
-        <Button sx={{ m: 2 }} variant="contained" onClick={handleOpen}>
+        <Button sx={{ m: 2 }} variant="contained" onClick={createNewPost}>
           Create New Post
         </Button>
 

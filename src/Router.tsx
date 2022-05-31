@@ -1,5 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { Feed, SignUp, SignIn, LandingPage, Profile } from "./pages/index";
+import {
+  Feed,
+  SignUp,
+  SignIn,
+  LandingPage,
+  Profile,
+  Explore,
+} from "./pages/index";
 import { RequireAuth } from "./components/index";
 
 export function Router() {
@@ -7,6 +14,7 @@ export function Router() {
     <Routes>
       <Route path="" element={<LandingPage />}></Route>
       <Route path="/signIn" element={<SignIn />}></Route>
+      <Route path="/explore" element={<Explore />}></Route>
       <Route
         path="/feed"
         element={

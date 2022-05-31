@@ -14,28 +14,11 @@ import { addQuestion } from "../redux/slices/feedSlice";
 import { RootState } from "../redux/store";
 import { NewQuestion } from "../types/NewQuestion";
 import { FULFILLED, LOADING } from "../utilities/constants/api-status";
-
+import { tags } from "../utilities/data/tags";
 interface AddQuestionProp {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const tags = [
-  "Cake",
-  "Baking",
-  "Baking Tools",
-  "Recipes",
-  "Cake Decoration",
-  "Pastry",
-  "Donuts",
-  "Breads",
-  "Wheat Bread",
-  "Cookies",
-  "Business",
-  "Icing",
-  "Experience",
-  "Bakers",
-];
 
 interface AddQuestionErrorsType {
   questionTitleError: string;
@@ -140,7 +123,7 @@ export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
             updateFormData("questionTitle", event.target.value)
           }
           sx={{ my: 1 }}
-          autoComplete="false"
+          autoComplete="off"
         />
         <TextField
           id="question-text"
@@ -158,12 +141,11 @@ export function AddQuestionModal({ open, setOpen }: AddQuestionProp) {
             updateFormData("questionText", event.target.value)
           }
           fullWidth
-          autoComplete="false"
+          autoComplete="off"
         />
         <Autocomplete
           multiple
           size="small"
-          freeSolo
           sx={{ my: 1 }}
           id="tags-standard"
           value={addQuestionData.tags}
