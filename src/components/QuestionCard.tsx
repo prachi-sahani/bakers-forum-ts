@@ -22,6 +22,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
+  Tooltip,
 } from "../utilities/material-ui/material-components";
 import { Question } from "../types/Question";
 import { VoteSection } from "./VoteSection";
@@ -117,33 +118,44 @@ export function QuestionCard({ question }: QuestionCardProp) {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <CommentOutlinedIcon />
+            <Tooltip title="Comments">
+              <CommentOutlinedIcon />
+            </Tooltip>
           </ExpandComments>
-          <IconButton aria-label="share">
-            <ShareOutlinedIcon />
-          </IconButton>
+          <Tooltip title="Share">
+            <IconButton aria-label="share">
+              <ShareOutlinedIcon />
+            </IconButton>
+          </Tooltip>
           {question.bookmarked && authToken ? (
-            <IconButton
-              aria-label="bookmark"
-              onClick={() =>
-                dispatch(
-                  removeBookmark({ token: authToken, questionId: question._id })
-                )
-              }
-            >
-              <BookmarkIcon />
-            </IconButton>
+            <Tooltip title="Remove Bookmark">
+              <IconButton
+                aria-label="bookmark"
+                onClick={() =>
+                  dispatch(
+                    removeBookmark({
+                      token: authToken,
+                      questionId: question._id,
+                    })
+                  )
+                }
+              >
+                <BookmarkIcon />
+              </IconButton>
+            </Tooltip>
           ) : (
-            <IconButton
-              aria-label="bookmark"
-              onClick={() =>
-                dispatch(
-                  addBookmark({ token: authToken, questionId: question._id })
-                )
-              }
-            >
-              <BookmarkBorderOutlinedIcon />
-            </IconButton>
+            <Tooltip title="Add Bookmark">
+              <IconButton
+                aria-label="bookmark"
+                onClick={() =>
+                  dispatch(
+                    addBookmark({ token: authToken, questionId: question._id })
+                  )
+                }
+              >
+                <BookmarkBorderOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </CardActions>
         <CommentSection question={question} expanded={expanded} />
