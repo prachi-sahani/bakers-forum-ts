@@ -73,7 +73,7 @@ export function QuestionCard({ question }: QuestionCardProp) {
                 <ListItemAvatar sx={{ minWidth: "2rem" }}>
                   <Avatar
                     sx={{
-                      bgcolor: grey[400],
+                      backgroundColor: grey[400],
                       height: "1.5rem",
                       width: "1.5rem",
                       fontSize: "1rem",
