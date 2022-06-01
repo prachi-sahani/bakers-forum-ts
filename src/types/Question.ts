@@ -10,6 +10,7 @@ export interface Question {
   comments: Comment[];
   votes: Vote;
   tags: string[];
+  bookmarked:boolean;
   updatedAt: Date;
   createdAt: Date;
 }
