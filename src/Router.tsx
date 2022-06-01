@@ -6,6 +6,7 @@ import {
   LandingPage,
   Profile,
   Explore,
+  Bookmark,
 } from "./pages/index";
 import { RequireAuth } from "./components/index";
 
@@ -28,6 +29,14 @@ export function Router() {
         element={
           <RequireAuth>
             <Profile />
+          </RequireAuth>
+        }
+      ></Route>
+      <Route
+        path="/bookmarks"
+        element={
+          <RequireAuth>
+            <Bookmark />
           </RequireAuth>
         }
       ></Route>

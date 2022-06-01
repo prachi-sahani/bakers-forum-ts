@@ -28,10 +28,10 @@ const dropDownItem = [
     title: "Bookmarks",
     route: "/bookmarks",
   },
-  {
-    title: "Notifications",
-    route: "/notifications",
-  },
+  // {
+  //   title: "Notifications",
+  //   route: "/notifications",
+  // },
   {
     title: "Profile",
     route: "/profile",
