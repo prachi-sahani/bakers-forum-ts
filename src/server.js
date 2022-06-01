@@ -42,6 +42,10 @@ import {
   editQuestionHandler,
   deleteQuestionHandler,
 } from "./backend/controllers/QuestionController";
+import {
+  addBookmarkQuestionHandler,
+  removeBookmarkQuestionHandler,
+} from "./backend/controllers/BookmarkController";
 
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
@@ -58,8 +62,12 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       server.logging = false;
       users.forEach((item) =>
-      // temporarily added dummy data for following to view the posts in user feed
-        server.create("user", { ...item, followers: [], following: ["prachisahani"] })
+        // temporarily added dummy data for following to view the posts in user feed
+        server.create("user", {
+          ...item,
+          followers: [],
+          following: ["prachisahani"],
+        })
       );
 
       questions.forEach((item) => {
@@ -123,6 +131,16 @@ export function makeServer({ environment = "development" } = {}) {
       this.post(
         "/votes/vote/:questionId/:answerId",
         voteAnswerHandler.bind(this)
+      );
+
+      // bookmark routes (private)
+      this.post(
+        "/question/addBookmark/:questionId",
+        addBookmarkQuestionHandler.bind(this)
+      );
+      this.post(
+        "/question/removeBookmark/:questionId",
+        removeBookmarkQuestionHandler.bind(this)
       );
 
       // comments routes (public)

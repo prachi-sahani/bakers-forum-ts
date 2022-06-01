@@ -13,11 +13,18 @@ export const questions = [
     questionText:
       "Hi everyone. I’m making a cupcake tower for my daughters wedding this fall. I’m thinking of baking them early abs freezing them. I was planning to take them out of the freezer and let them defrost in the fridge on the Thursday evening before the wedding. That will give me Friday to decorate them and drop them off Friday evening. I’m not sure the venue will have enough storage capacity to keep them in the fridge from Friday until Saturday and debating between Using Swiss meringue buttercream or American buttercream. Any suggestions for tips would be greatly appreciated.",
     votes: {
-      upvotedBy: ["zuberdunge", "jaanuBoleBhow","hinanshi04", "itsHamehere", "prachisahani"],
+      upvotedBy: [
+        "zuberdunge",
+        "jaanuBoleBhow",
+        "hinanshi04",
+        "itsHamehere",
+        "prachisahani",
+      ],
       downvotedBy: [],
     },
     comments: [],
     tags: [],
+    bookmarked: false,
     answers: [
       {
         _id: uuid(),
@@ -68,6 +75,7 @@ export const questions = [
       },
     ],
     tags: [],
+    bookmarked: false,
     answers: [
       {
         _id: uuid(),
@@ -116,6 +124,7 @@ export const questions = [
       },
     ],
     tags: ["New"],
+    bookmarked: false,
     answers: [
       {
         _id: uuid(),
@@ -165,6 +174,7 @@ export const questions = [
       },
     ],
     tags: ["New"],
+    bookmarked: false,
     answers: [
       {
         _id: uuid(),
