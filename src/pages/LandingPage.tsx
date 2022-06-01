@@ -56,7 +56,7 @@ export function LandingPage() {
         </Box>
         {authToken ? (
           <Box component="div">
-            <Link to="/feed" style={{ textDecoration: "none" }}>
+            <Link to="/explore" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 sx={{ width: "max-content", display: "flex", my: 1 }}

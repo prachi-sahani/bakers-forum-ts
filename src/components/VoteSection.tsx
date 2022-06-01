@@ -10,18 +10,27 @@ import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { addVote } from "../redux/slices/feedSlice";
 import { RootState } from "../redux/store";
 import { Question } from "../types/Question";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function VoteSection({ question }: { question: Question }) {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { authToken, userDetails } = useAppSelector(
     (state: RootState) => state.authentication
   );
   const updateVote = (type: string, key: string) => {
-    // if question is already upvoted or downvoted
-    if (question.votes[key as keyof Vote].includes(userDetails.username)) {
-      dispatch(addVote({ token: authToken, id: question._id, vote: "unvote" }));
+    if (authToken) {
+      // if question is already upvoted or downvoted
+      if (question.votes[key as keyof Vote].includes(userDetails.username)) {
+        dispatch(
+          addVote({ token: authToken, id: question._id, vote: "unvote" })
+        );
+      } else {
+        dispatch(addVote({ token: authToken, id: question._id, vote: type }));
+      }
     } else {
-      dispatch(addVote({ token: authToken, id: question._id, vote: type }));
+      navigate("/signin", { state: { from: location } });
     }
   };
 
@@ -30,11 +39,11 @@ export function VoteSection({ question }: { question: Question }) {
     // Downvoted/upvoted by: user1, user2, user3
     let finalText =
       length > 0
-        ? `@${question.votes[type as keyof Vote].slice(0, 3).join(", @")}`
+        ? `@${question.votes[type as keyof Vote].slice(0, 1).join(", @")}`
         : `None`;
-    // if number of votes more than 3 -> add  `+ "remaining users" more`
-    if (length > 3) {
-      finalText += ` + ${length - 3} more`;
+    // if number of votes more than 1 -> add  `+ "remaining users" more`
+    if (length > 1) {
+      finalText += ` + ${length - 1} more`;
     }
     return finalText;
   };
@@ -49,7 +58,10 @@ export function VoteSection({ question }: { question: Question }) {
         px: 0.5,
       }}
     >
-      <Tooltip title={`Upvoted by: ${getVoteTooltipText("upvotedBy")}`}>
+      <Tooltip
+        title={`Upvoted by: ${getVoteTooltipText("upvotedBy")}`}
+        placement="top"
+      >
         <IconButton
           aria-label="upvote"
           color={

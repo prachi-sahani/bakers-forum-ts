@@ -3,6 +3,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  ToggleButton,
 } from "../utilities/material-ui/material-components";
 import { QuestionCard } from "./QuestionCard";
 import { FilterListIcon } from "../utilities/material-ui/material-icons";
@@ -16,6 +17,7 @@ import { DataLoader } from "./DataLoader";
 import { NoPostsMessage } from "./NoPostsMessage";
 import { grey } from "../utilities/material-ui/material-colors";
 import { useLocation } from "react-router-dom";
+import { tags } from "../utilities/data/tags";
 
 export function QuestionCardsSection({
   title,
@@ -29,7 +31,6 @@ export function QuestionCardsSection({
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -74,6 +75,26 @@ export function QuestionCardsSection({
           </React.Fragment>
         )}
       </Box>
+      {/* for now this is static */}
+      {location.pathname === "/explore" && (
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+          {tags.map((tag, index) => (
+            <ToggleButton
+              key={index}
+              value="check"
+              sx={{ py: 0.5 }}
+              size="small"
+              color="primary"
+              selected={index % 4 === 0}
+              // onChange={() => {
+              //   setSelected(!selected);
+              // }}
+            >
+              {tag}
+            </ToggleButton>
+          ))}
+        </Box>
+      )}
       {questions &&
         questions?.length > 0 &&
         questions?.map((question) => (

@@ -1,0 +1,16 @@
+export const tags: string[] = [
+  "Cake",
+  "Baking",
+  "Baking Tools",
+  "Recipes",
+  "Cake Decoration",
+  "Pastry",
+  "Donuts",
+  "Breads",
+  "Wheat Bread",
+  "Cookies",
+  "Business",
+  "Icing",
+  "Experience",
+  "Bakers",
+];

@@ -31,13 +31,6 @@ export function SignIn() {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    // if user is already logged in and tries to access signin page, they will be redirected to previous page
-    if (authToken) {
-      navigate(-1);
-    }
-  }, []);
-
-  React.useEffect(() => {
     if (authStatus === FULFILLED && authToken) {
       const lastState: any = location?.state;
       const lastRoute: string = lastState?.from?.pathname || "/feed";

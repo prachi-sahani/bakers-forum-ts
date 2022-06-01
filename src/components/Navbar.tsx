@@ -10,7 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "../utilities/material-ui/material-components";
-import { LogoutIcon } from "../utilities/material-ui/material-icons";
+import { LogoutIcon, LoginIcon } from "../utilities/material-ui/material-icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { logout } from "../redux/slices/authenticationSlice";
@@ -63,12 +63,12 @@ export function Navbar() {
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar disableGutters variant="dense" sx={{ px: 2 }}>
-        <Link to="/">
+        <Link to="/explore">
           <Box sx={{ display: { xs: "none", md: "flex" }, height: "2rem" }}>
             <img src="assets/logo.png" alt="Bakers' Forum" />
           </Box>
         </Link>
-        <Link to="/">
+        <Link to="/explore">
           <Box
             sx={{
               flexGrow: 1,
@@ -80,13 +80,11 @@ export function Navbar() {
           </Box>
         </Link>
 
-        {(location.pathname === "/feed" ||
-          location.pathname === "/profile") && (
+        {authToken ? (
           <Box
             sx={{
               flexGrow: 0,
               ml: "auto",
-              pr: 1.5,
               display: { xs: "none", md: "flex" },
             }}
           >
@@ -96,6 +94,21 @@ export function Navbar() {
               </IconButton>
             </Tooltip>
           </Box>
+        ) : (
+          !location.pathname.includes("sign") && (
+            <Box
+              sx={{
+                flexGrow: 0,
+                ml: "auto",
+              }}
+            >
+              <Tooltip title="Log in">
+                <IconButton onClick={() => navigate("/signin")}>
+                  <LoginIcon sx={{ color: "white" }} />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          )
         )}
         {authToken && (
           <Box
@@ -151,7 +164,7 @@ export function Navbar() {
                   dispatch(logout());
                   handleCloseUserMenu();
                 }}
-                sx={{ pr: 3 }}
+                sx={{ pr: 3, width: "100%" }}
               >
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>

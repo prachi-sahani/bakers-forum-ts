@@ -21,8 +21,11 @@ import {
 } from "../utilities/material-ui/material-components";
 import { DataLoader } from "./DataLoader";
 import { CustomSnackbar } from "./CustomSnackbar";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function TrendingSection() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
     users,
@@ -45,21 +48,37 @@ export function TrendingSection() {
 
   React.useEffect(() => {
     setUsersToDisplay(
-      users.filter(
-        (user) =>
-          !userDetails.following.includes(user.username) &&
-          user.username !== userDetails.username
-      )
+      authToken
+        ? users.filter(
+            (user) =>
+              !userDetails.following.includes(user.username) &&
+              user.username !== userDetails.username
+          )
+        : users
     );
   }, [users]);
 
   const isFollowing = (username: string) => {
+    // list of accounts that user follows
+    const userFollowingList = JSON.parse(
+      localStorage.getItem("user") || "{}"
+    )?.following;
     // using userdetails from storage coz it has the updated data, once the user refreshes, state will also get updated - this is done to ensure that user can unfollow after following them
-    return JSON.parse(localStorage.getItem("user") || "{}").following.includes(
-      username
-    );
+    return userFollowingList ? userFollowingList.includes(username) : false;
   };
 
+  const followUnfollowUser = (type: string, item: UserDetails) => {
+    if (authToken) {
+      setSelectedUsername(item.username);
+      if (type === "unfollow") {
+        dispatch(unfollowUser({ token: authToken, id: item._id }));
+      } else {
+        dispatch(followUser({ token: authToken, id: item._id }));
+      }
+    } else {
+      navigate("/signin", { state: { from: location } });
+    }
+  };
   return (
     <Box sx={{ p: 1, minWidth: "20%" }}>
       <OutlinedInput
@@ -85,10 +104,7 @@ export function TrendingSection() {
                     unfollowUserAPIStatus === LOADING &&
                     selectedUsername === item.username
                   }
-                  onClick={() => {
-                    setSelectedUsername(item.username);
-                    dispatch(unfollowUser({ token: authToken, id: item._id }));
-                  }}
+                  onClick={() => followUnfollowUser("follow", item)}
                 >
                   Unfollow
                 </LoadingButton>
@@ -97,10 +113,7 @@ export function TrendingSection() {
                   size="small"
                   variant="text"
                   sx={{ fontSize: 12, textTransform: "none" }}
-                  onClick={() => {
-                    setSelectedUsername(item.username);
-                    dispatch(followUser({ token: authToken, id: item._id }));
-                  }}
+                  onClick={() => followUnfollowUser("follow", item)}
                   loading={
                     followUserAPIStatus === LOADING &&
                     selectedUsername === item.username
