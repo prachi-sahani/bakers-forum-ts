@@ -123,13 +123,19 @@ export function QuestionCardsSection({
       {questionStatus === LOADING && <DataLoader size={50} />}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
-        location.pathname === "/feed" && (
+        location.pathname === "/feed" && tagFilters.length === 0 && (
           <NoPostsMessage message="Start following fellow bakers to view their posts" />
         )}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
+        location.pathname === "/feed" && tagFilters.length > 0 && (
+          <NoPostsMessage message="Couldn't find any matches!" />
+        )}
+      {questionStatus === FULFILLED &&
+        questions?.length === 0 &&
         (location.pathname === "/profile" ||
-          location.pathname === "/bookmarks") && (
+          location.pathname === "/bookmarks" ||
+          location.pathname === "/explore") && (
           <NoPostsMessage message="No posts found" />
         )}
       {questionStatus === ERROR && (
