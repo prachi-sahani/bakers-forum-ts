@@ -32,7 +32,6 @@ export function Bookmark() {
     setQuestionsToDisplay((value: Question[]) =>
       questions?.filter((ques: Question) => ques.bookmarked)
     );
-    console.log(questions?.filter((ques: Question) => ques.bookmarked));
   }, [questions]);
 
   return (
