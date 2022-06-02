@@ -22,6 +22,7 @@ import {
 import { DataLoader } from "./DataLoader";
 import { CustomSnackbar } from "./CustomSnackbar";
 import { useLocation, useNavigate } from "react-router-dom";
+import { updateSearch } from "../redux/slices/feedSlice";
 
 export function TrendingSection() {
   const location = useLocation();
@@ -38,6 +39,7 @@ export function TrendingSection() {
   const { userDetails, authToken } = useAppSelector(
     (state: RootState) => state.authentication
   );
+  const { searchInput } = useAppSelector((state: RootState) => state.feed);
   const [usersToDisplay, setUsersToDisplay] = React.useState<UserDetails[]>([]);
   const [selectedUsername, setSelectedUsername] = React.useState<string>("");
   React.useEffect(() => {
@@ -81,12 +83,16 @@ export function TrendingSection() {
   };
   return (
     <Box sx={{ p: 1, minWidth: "20%" }}>
-      <OutlinedInput
-        fullWidth
-        placeholder="Search posts, people, anything"
-        sx={{ fontSize: 14 }}
-        inputProps={{ style: { padding: 6 } }}
-      />
+      {location.pathname !== "/profile" && (
+        <OutlinedInput
+          fullWidth
+          value={searchInput}
+          placeholder="Search posts, people, anything"
+          sx={{ fontSize: 14 }}
+          inputProps={{ style: { padding: 6 } }}
+          onChange={(e) => dispatch(updateSearch(e.target.value))}
+        />
+      )}
       <Box sx={{ my: 2, display: { xs: "none", md: "block" } }}>
         <Typography variant="body2" sx={{ fontWeight: "bold" }}>
           You may also know

@@ -10,7 +10,7 @@ export function Explore() {
   const [selectedFilter, setSelectedFilter] =
     React.useState<string>("Trending");
   const dispatch = useAppDispatch();
-  const { questions, questionStatus } = useAppSelector(
+  const { questions, questionStatus, searchInput } = useAppSelector(
     (state: RootState) => state.feed
   );
   const [questionsToDisplay, setQuestionsToDisplay] = React.useState<
@@ -25,41 +25,49 @@ export function Explore() {
     if (questionStatus === IDLE) {
       dispatch(getQuestions());
     }
+    let questionList = [...questions];
     switch (selectedFilter) {
       case "Latest":
-        setQuestionsToDisplay(
-          [...questions].sort(
-            (a, b) =>
-              new Date(b.updatedAt).valueOf() - new Date(a.updatedAt).valueOf()
-          )
+        // setQuestionsToDisplay(
+        questionList.sort(
+          (a, b) =>
+            new Date(b.updatedAt).valueOf() - new Date(a.updatedAt).valueOf()
         );
+        // );
         break;
       case "Trending":
-        setQuestionsToDisplay(
-          [...questions].sort(
-            (a, b) =>
-              b.votes.upvotedBy.length -
-              b.votes.downvotedBy.length -
-              (a.votes.upvotedBy.length - a.votes.downvotedBy.length)
-          )
+        // setQuestionsToDisplay(
+        questionList.sort(
+          (a, b) =>
+            b.votes.upvotedBy.length -
+            b.votes.downvotedBy.length -
+            (a.votes.upvotedBy.length - a.votes.downvotedBy.length)
         );
+        // );
         break;
       default:
-        setQuestionsToDisplay(
-          questions.filter(
-            (ques) =>
-              ques.questionTitle
-                .toLowerCase()
-                .includes(selectedFilter.toLowerCase()) ||
-              ques.questionText
-                .toLowerCase()
-                .includes(selectedFilter.toLowerCase()) ||
-              ques.tags.includes(selectedFilter)
-          )
+        // setQuestionsToDisplay(
+        questionList = questionList.filter(
+          (ques) =>
+            ques.questionTitle
+              .toLowerCase()
+              .includes(selectedFilter.toLowerCase()) ||
+            ques.questionText
+              .toLowerCase()
+              .includes(selectedFilter.toLowerCase()) ||
+            ques.tags.includes(selectedFilter)
         );
         break;
     }
-  }, [questions, selectedFilter]);
+    setQuestionsToDisplay(
+      questionList.filter( ques =>
+        ques.questionTitle.toLowerCase().includes(searchInput) ||
+          ques.questionText.toLowerCase().includes(searchInput) ||
+          ques.username.toLowerCase().includes(searchInput) ||
+          ques.tags.includes(searchInput)
+      )
+    );
+  }, [questions, selectedFilter,searchInput]);
 
   return (
     <QuestionCardsSection

@@ -21,6 +21,7 @@ import { useLocation } from "react-router-dom";
 const tagList: string[] = [
   "Latest",
   "Trending",
+  "Recipe",
   "Cake",
   "Pastries",
   "Breads",

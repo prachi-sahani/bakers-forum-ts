@@ -8,7 +8,7 @@ import { IDLE } from "../utilities/constants/api-status";
 
 export function Feed() {
   const dispatch = useAppDispatch();
-  const { questions, questionStatus } = useAppSelector(
+  const { questions, questionStatus, searchInput } = useAppSelector(
     (state: RootState) => state.feed
   );
   const { userDetails } = useAppSelector(
@@ -42,12 +42,23 @@ export function Feed() {
             (ques: Question) =>
               (userDetails.following.includes(ques.username) ||
                 userDetails.username === ques.username) &&
-              tagFilters.some((tag) => ques.tags.includes(tag))
+              tagFilters.some(
+                (tag) =>
+                  ques.tags.includes(tag) &&
+                  (ques.questionTitle.toLowerCase().includes(searchInput) ||
+                  ques.questionText.toLowerCase().includes(searchInput) ||
+                  ques.username.toLowerCase().includes(searchInput) ||
+                  ques.tags.includes(searchInput))
+              )
           )
         : questions?.filter(
             (ques: Question) =>
-              userDetails.following.includes(ques.username) ||
-              userDetails.username === ques.username
+              (userDetails.following.includes(ques.username) ||
+              userDetails.username === ques.username) && (
+              ques.questionTitle.toLowerCase().includes(searchInput) ||
+              ques.questionText.toLowerCase().includes(searchInput) ||
+              ques.username.toLowerCase().includes(searchInput) ||
+              ques.tags.includes(searchInput))
           );
 
     questionList?.sort((a, b) => {
@@ -56,7 +67,7 @@ export function Feed() {
         : new Date(a.updatedAt).valueOf() - new Date(b.updatedAt).valueOf();
     });
     setQuestionsToDisplay((value: Question[]) => (value = [...questionList]));
-  }, [questions, tagFilters, sortBy]);
+  }, [questions, tagFilters, sortBy, searchInput]);
 
   return (
     <QuestionCardsSection
