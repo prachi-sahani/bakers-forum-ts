@@ -8,4 +8,4 @@ export { Navbar } from "./Navbar";
 export { RequireAuth } from "./RequireAuth";
 export { Sidenav } from "./Sidenav";
 export { TrendingSection } from "./TrendingSection";
-export { ProfileSection } from "./ProfileSection";
+export { UserProfile } from "./UserProfile";

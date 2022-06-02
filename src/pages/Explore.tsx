@@ -1,10 +1,4 @@
-import { Box } from "../utilities/material-ui/material-components";
-import {
-  QuestionCardsSection,
-  TrendingSection,
-  AddPostMobile,
-  Sidenav,
-} from "../components/index";
+import { QuestionCardsSection } from "../components/index";
 import { Question } from "../types/Question";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
@@ -13,8 +7,6 @@ import { IDLE } from "../utilities/constants/api-status";
 import { getQuestions } from "../redux/slices/feedSlice";
 
 export function Explore() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const [selectedFilter, setSelectedFilter] =
     React.useState<string>("Trending");
   const dispatch = useAppDispatch();
@@ -70,24 +62,11 @@ export function Explore() {
   }, [questions, selectedFilter]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        p: { md: "0 1rem 0 0", xs: "1rem" },
-        gap: 2,
-        flexDirection: { xs: "column-reverse", md: "row" },
-      }}
-      component="main"
-    >
-      <Sidenav handleOpen={handleOpen} open={open} setOpen={setOpen} />
-      <QuestionCardsSection
-        sortBy={selectedFilter}
-        updateSortBy={updateSelectedFilter}
-        title="Explore"
-        questions={questionsToDisplay}
-      />
-      <TrendingSection />
-      <AddPostMobile handleOpen={handleOpen} />
-    </Box>
+    <QuestionCardsSection
+      sortBy={selectedFilter}
+      updateSortBy={updateSelectedFilter}
+      title="Explore"
+      questions={questionsToDisplay}
+    />
   );
 }
