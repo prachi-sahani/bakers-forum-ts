@@ -17,6 +17,7 @@ import {
 } from "../../utilities/services/feed";
 
 interface FeedQuestionType {
+  searchInput: string;
   questions: Question[];
   questionStatus: string;
   questionError: string;
@@ -35,6 +36,7 @@ interface FeedQuestionType {
 }
 
 const initialData: FeedQuestionType = {
+  searchInput: "",
   questions: [],
   questionStatus: IDLE,
   questionError: "",
@@ -76,7 +78,11 @@ export const addQuestion = createAsyncThunk(
 const feedSlice = createSlice({
   name: "feed",
   initialState: initialData,
-  reducers: {},
+  reducers: {
+    updateSearch: (state, action) => {
+      state.searchInput = action.payload.toLowerCase();
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getQuestions.pending, (state) => {
       state.questionStatus = LOADING;
@@ -159,4 +165,5 @@ const feedSlice = createSlice({
   },
 });
 
+export const { updateSearch } = feedSlice.actions;
 export default feedSlice.reducer;

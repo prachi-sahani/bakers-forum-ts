@@ -1,10 +1,4 @@
-import { Box } from "../utilities/material-ui/material-components";
-import {
-  QuestionCardsSection,
-  TrendingSection,
-  AddPostMobile,
-  Sidenav,
-} from "../components/index";
+import { QuestionCardsSection } from "../components/index";
 import { Question } from "../types/Question";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
@@ -13,12 +7,10 @@ import { IDLE } from "../utilities/constants/api-status";
 import { getQuestions } from "../redux/slices/feedSlice";
 
 export function Explore() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const [selectedFilter, setSelectedFilter] =
-    React.useState<string>("Trending");
+    React.useState<string>("Latest");
   const dispatch = useAppDispatch();
-  const { questions, questionStatus } = useAppSelector(
+  const { questions, questionStatus, searchInput } = useAppSelector(
     (state: RootState) => state.feed
   );
   const [questionsToDisplay, setQuestionsToDisplay] = React.useState<
@@ -33,61 +25,56 @@ export function Explore() {
     if (questionStatus === IDLE) {
       dispatch(getQuestions());
     }
+    let questionList = [...questions];
     switch (selectedFilter) {
       case "Latest":
-        setQuestionsToDisplay(
-          [...questions].sort(
-            (a, b) =>
-              new Date(b.updatedAt).valueOf() - new Date(a.updatedAt).valueOf()
-          )
+        // setQuestionsToDisplay(
+        questionList.sort(
+          (a, b) =>
+            new Date(b.updatedAt).valueOf() - new Date(a.updatedAt).valueOf()
         );
+        // );
         break;
       case "Trending":
-        setQuestionsToDisplay(
-          [...questions].sort(
-            (a, b) =>
-              b.votes.upvotedBy.length -
-              b.votes.downvotedBy.length -
-              (a.votes.upvotedBy.length - a.votes.downvotedBy.length)
-          )
+        // setQuestionsToDisplay(
+        questionList.sort(
+          (a, b) =>
+            b.votes.upvotedBy.length -
+            b.votes.downvotedBy.length -
+            (a.votes.upvotedBy.length - a.votes.downvotedBy.length)
         );
+        // );
         break;
       default:
-        setQuestionsToDisplay(
-          questions.filter(
-            (ques) =>
-              ques.questionTitle
-                .toLowerCase()
-                .includes(selectedFilter.toLowerCase()) ||
-              ques.questionText
-                .toLowerCase()
-                .includes(selectedFilter.toLowerCase()) ||
-              ques.tags.includes(selectedFilter)
-          )
+        // setQuestionsToDisplay(
+        questionList = questionList.filter(
+          (ques) =>
+            ques.questionTitle
+              .toLowerCase()
+              .includes(selectedFilter.toLowerCase()) ||
+            ques.questionText
+              .toLowerCase()
+              .includes(selectedFilter.toLowerCase()) ||
+            ques.tags.includes(selectedFilter)
         );
         break;
     }
-  }, [questions, selectedFilter]);
+    setQuestionsToDisplay(
+      questionList.filter( ques =>
+        ques.questionTitle.toLowerCase().includes(searchInput) ||
+          ques.questionText.toLowerCase().includes(searchInput) ||
+          ques.username.toLowerCase().includes(searchInput) ||
+          ques.tags.includes(searchInput)
+      )
+    );
+  }, [questions, selectedFilter,searchInput]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        p: { md: "0 1rem 0 0", xs: "1rem" },
-        gap: 2,
-        flexDirection: { xs: "column-reverse", md: "row" },
-      }}
-      component="main"
-    >
-      <Sidenav handleOpen={handleOpen} open={open} setOpen={setOpen} />
-      <QuestionCardsSection
-        sortBy={selectedFilter}
-        updateSortBy={updateSelectedFilter}
-        title="Explore"
-        questions={questionsToDisplay}
-      />
-      <TrendingSection />
-      <AddPostMobile handleOpen={handleOpen} />
-    </Box>
+    <QuestionCardsSection
+      sortBy={selectedFilter}
+      updateSortBy={updateSelectedFilter}
+      title="Explore"
+      questions={questionsToDisplay}
+    />
   );
 }
