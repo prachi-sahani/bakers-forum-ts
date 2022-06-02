@@ -62,7 +62,7 @@ export function AddComment({ id }: { id: string }) {
       <ListItemAvatar sx={{ minWidth: 0 }}>
         <Avatar
           sx={{
-            bgcolor: grey[400],
+            backgroundColor: grey[400],
             height: "2rem",
             width: "2rem",
             fontSize: "1rem",

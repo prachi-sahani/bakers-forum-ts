@@ -65,7 +65,7 @@ export function Navbar() {
       <Toolbar disableGutters variant="dense" sx={{ px: 2 }}>
         <Link to="/explore">
           <Box sx={{ display: { xs: "none", md: "flex" }, height: "2rem" }}>
-            <img src="assets/logo.png" alt="Bakers' Forum" />
+            <img src="/assets/logo.png" alt="Bakers' Forum" />
           </Box>
         </Link>
         <Link to="/explore">
@@ -76,7 +76,7 @@ export function Navbar() {
               height: "1.5rem",
             }}
           >
-            <img src="assets/logo.png" alt="Bakers' Forum" />
+            <img src="/assets/logo.png" alt="Bakers' Forum" />
           </Box>
         </Link>
 
