@@ -17,7 +17,17 @@ import { DataLoader } from "./DataLoader";
 import { NoPostsMessage } from "./NoPostsMessage";
 import { grey } from "../utilities/material-ui/material-colors";
 import { useLocation } from "react-router-dom";
-import { tags } from "../utilities/data/tags";
+
+const tagList: string[] = [
+  "Latest",
+  "Trending",
+  "Cake",
+  "Pastries",
+  "Breads",
+  "Cookies",
+  "Baking Tools",
+  "Decoration",
+];
 
 export function QuestionCardsSection({
   title,
@@ -90,26 +100,19 @@ export function QuestionCardsSection({
       {/* for now this is static */}
       {location.pathname === "/explore" && (
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-          <ToggleButton
-            value="Latest"
-            sx={{ py: 0.5 }}
-            size="small"
-            color="primary"
-            selected={sortBy === "Latest"}
-            onChange={() => updateSortBy("Latest")}
-          >
-            Latest
-          </ToggleButton>
-          <ToggleButton
-            value="Trending"
-            sx={{ py: 0.5 }}
-            size="small"
-            color="primary"
-            selected={sortBy === "Trending"}
-            onChange={() => updateSortBy("Trending")}
-          >
-            Trending
-          </ToggleButton>
+          {tagList.map((tag) => (
+            <ToggleButton
+              key={tag}
+              value={tag}
+              sx={{ py: 0.5 }}
+              size="small"
+              color="primary"
+              selected={sortBy === tag}
+              onChange={() => updateSortBy(tag)}
+            >
+              {tag}
+            </ToggleButton>
+          ))}
         </Box>
       )}
       {questions &&
