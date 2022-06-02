@@ -1,10 +1,4 @@
-import { Box } from "../utilities/material-ui/material-components";
-import {
-  QuestionCardsSection,
-  TrendingSection,
-  AddPostMobile,
-  Sidenav,
-} from "../components/index";
+import { QuestionCardsSection } from "../components/index";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { getQuestions } from "../redux/slices/feedSlice";
@@ -13,10 +7,8 @@ import { Question } from "../types/Question";
 import { IDLE } from "../utilities/constants/api-status";
 
 export function Feed() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const dispatch = useAppDispatch();
-  const { questions, questionStatus } = useAppSelector(
+  const { questions, questionStatus, searchInput } = useAppSelector(
     (state: RootState) => state.feed
   );
   const { userDetails } = useAppSelector(
@@ -50,12 +42,23 @@ export function Feed() {
             (ques: Question) =>
               (userDetails.following.includes(ques.username) ||
                 userDetails.username === ques.username) &&
-              tagFilters.some((tag) => ques.tags.includes(tag))
+              tagFilters.some(
+                (tag) =>
+                  ques.tags.includes(tag) &&
+                  (ques.questionTitle.toLowerCase().includes(searchInput) ||
+                  ques.questionText.toLowerCase().includes(searchInput) ||
+                  ques.username.toLowerCase().includes(searchInput) ||
+                  ques.tags.includes(searchInput))
+              )
           )
         : questions?.filter(
             (ques: Question) =>
-              userDetails.following.includes(ques.username) ||
-              userDetails.username === ques.username
+              (userDetails.following.includes(ques.username) ||
+              userDetails.username === ques.username) && (
+              ques.questionTitle.toLowerCase().includes(searchInput) ||
+              ques.questionText.toLowerCase().includes(searchInput) ||
+              ques.username.toLowerCase().includes(searchInput) ||
+              ques.tags.includes(searchInput))
           );
 
     questionList?.sort((a, b) => {
@@ -64,29 +67,16 @@ export function Feed() {
         : new Date(a.updatedAt).valueOf() - new Date(b.updatedAt).valueOf();
     });
     setQuestionsToDisplay((value: Question[]) => (value = [...questionList]));
-  }, [questions, tagFilters, sortBy]);
+  }, [questions, tagFilters, sortBy, searchInput]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        p: { md: "0 1rem 0 0", xs: "1rem" },
-        gap: 2,
-        flexDirection: { xs: "column-reverse", md: "row" },
-      }}
-      component="main"
-    >
-      <Sidenav handleOpen={handleOpen} open={open} setOpen={setOpen} />
-      <QuestionCardsSection
-        title="Latest Posts"
-        questions={questionsToDisplay}
-        tagFilters={tagFilters}
-        updateFilter={updateFilter}
-        sortBy={sortBy}
-        updateSortBy={updateSortBy}
-      />
-      <TrendingSection />
-      <AddPostMobile handleOpen={handleOpen} />
-    </Box>
+    <QuestionCardsSection
+      title="Latest Posts"
+      questions={questionsToDisplay}
+      tagFilters={tagFilters}
+      updateFilter={updateFilter}
+      sortBy={sortBy}
+      updateSortBy={updateSortBy}
+    />
   );
 }

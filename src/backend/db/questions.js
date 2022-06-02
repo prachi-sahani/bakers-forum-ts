@@ -44,8 +44,8 @@ export const questions = [
         ],
       },
     ],
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    createdAt: "2022-06-02T15:03:58+05:30",
+    updatedAt: "2022-06-02T15:03:58+05:30",
   },
   {
     _id: uuid(),
@@ -95,8 +95,8 @@ export const questions = [
         ],
       },
     ],
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    createdAt: "2022-06-02T15:03:50+05:30",
+    updatedAt: "2022-06-02T15:03:50+05:30",
   },
   {
     _id: uuid(),
@@ -144,8 +144,8 @@ export const questions = [
         ],
       },
     ],
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    createdAt: "2022-06-02T15:03:38+05:30",
+    updatedAt: "2022-06-02T15:03:38+05:30",
   },
   {
     _id: uuid(),
@@ -194,7 +194,7 @@ export const questions = [
         ],
       },
     ],
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    createdAt: "2022-06-02T15:03:08+05:30",
+    updatedAt: "2022-06-02T15:03:08+05:30",
   },
 ];

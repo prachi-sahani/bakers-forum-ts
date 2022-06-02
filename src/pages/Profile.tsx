@@ -1,30 +1,51 @@
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
+import { getQuestions } from "../redux/slices/feedSlice";
+import { RootState } from "../redux/store";
+import { Question } from "../types/Question";
 import { Box } from "../utilities/material-ui/material-components";
 import {
-  ProfileSection,
-  TrendingSection,
-  AddPostMobile,
-  Sidenav,
+  CustomSnackbar,
+  QuestionCardsSection,
+  UserProfile,
 } from "../components/index";
-import React from "react";
 
 export function Profile() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const { userDetails, editUserAPIError } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
+  const dispatch = useAppDispatch();
+  const { questions } = useAppSelector((state: RootState) => state.feed);
+  const [questionsToDisplay, setQuestionsToDisplay] = React.useState<
+    Question[]
+  >([]);
 
+  React.useEffect(() => {
+    if (questions.length === 0) {
+      dispatch(getQuestions());
+    }
+  }, []);
+  React.useEffect(() => {
+    // questions posted by the user
+    setQuestionsToDisplay((value: Question[]) =>
+      questions?.filter(
+        (ques: Question) => userDetails.username === ques.username
+      )
+    );
+  }, [questions]);
   return (
     <Box
       sx={{
+        p: 1,
         display: "flex",
-        p: { md: "0 1rem 0 0", xs: "1rem" },
+        flexGrow: 1,
+        flexDirection: "column",
         gap: 2,
-        flexDirection: { xs: "column-reverse", md: "row" },
       }}
-      component="main"
     >
-      <Sidenav handleOpen={handleOpen} open={open} setOpen={setOpen} />
-      <ProfileSection />
-      <TrendingSection />
-      <AddPostMobile handleOpen={handleOpen} />
+      <UserProfile user={userDetails} />
+      <QuestionCardsSection title="My Posts" questions={questionsToDisplay} />
+      {editUserAPIError && <CustomSnackbar message={editUserAPIError} />}
     </Box>
   );
 }
