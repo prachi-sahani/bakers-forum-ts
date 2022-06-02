@@ -7,6 +7,7 @@ import {
   Profile,
   Explore,
   Bookmark,
+  Questions,
 } from "./pages/index";
 import { RequireAuth } from "./components/index";
 
@@ -16,6 +17,7 @@ export function Router() {
       <Route path="" element={<LandingPage />}></Route>
       <Route path="/signIn" element={<SignIn />}></Route>
       <Route path="/explore" element={<Explore />}></Route>
+      <Route path="/question/:questionId" element={<Questions />}></Route>
       <Route
         path="/feed"
         element={

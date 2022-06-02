@@ -23,7 +23,7 @@ export const getAllQuestionsHandler = function () {
 export const getQuestionHandler = function (schema, request) {
   const questionId = request.params.questionId;
   try {
-    const question = schema.questions.findBy({ _id: questionId });
+    const question = schema.questions.findBy({ id: questionId });
     return new Response(200, {}, { question });
   } catch (error) {
     return new Response(

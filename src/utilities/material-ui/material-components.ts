@@ -46,6 +46,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import InputBase from '@mui/material/InputBase';
 
 export {
   AppBar,
@@ -96,4 +97,5 @@ export {
   Toolbar,
   Tooltip,
   Typography,
+  InputBase
 };
