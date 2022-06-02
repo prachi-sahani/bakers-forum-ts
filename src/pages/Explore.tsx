@@ -15,6 +15,7 @@ import { getQuestions } from "../redux/slices/feedSlice";
 export function Explore() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
+  const [selectedFilter, setSelectedFilter] = React.useState<string>("Trending");
   const dispatch = useAppDispatch();
   const { questions, questionStatus } = useAppSelector(
     (state: RootState) => state.feed
@@ -23,12 +24,32 @@ export function Explore() {
     Question[]
   >([]);
 
+  const updateSelectedFilter = (type: string) => {
+    setSelectedFilter(type);
+  };
+
   React.useEffect(() => {
     if (questionStatus === IDLE) {
       dispatch(getQuestions());
     }
-    setQuestionsToDisplay(questions);
-  }, [questions]);
+    switch (selectedFilter) {
+      case "Latest":
+        setQuestionsToDisplay([...questions].sort(
+          (a, b) =>
+            new Date(b.updatedAt).valueOf() - new Date(a.updatedAt).valueOf()
+        ));
+        break;
+      case "Trending":
+        setQuestionsToDisplay([...questions].sort(
+          (a, b) =>
+            b.votes.upvotedBy.length -
+            b.votes.downvotedBy.length -
+            (a.votes.upvotedBy.length - a.votes.downvotedBy.length)
+        ));
+        break;
+
+    }
+  }, [questions, selectedFilter]);
 
   return (
     <Box
@@ -41,7 +62,12 @@ export function Explore() {
       component="main"
     >
       <Sidenav handleOpen={handleOpen} open={open} setOpen={setOpen} />
-      <QuestionCardsSection title="Explore" questions={questionsToDisplay} />
+      <QuestionCardsSection
+        sortBy={selectedFilter}
+        updateSortBy={updateSelectedFilter}
+        title="Explore"
+        questions={questionsToDisplay}
+      />
       <TrendingSection />
       <AddPostMobile handleOpen={handleOpen} />
     </Box>

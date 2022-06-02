@@ -74,7 +74,7 @@ export const questions = [
         commentText: "Hey there welcome aboard Himu! :)",
       },
     ],
-    tags: [],
+    tags: ["Bakers", "Baking"],
     bookmarked: false,
     answers: [
       {
@@ -123,7 +123,7 @@ export const questions = [
         commentText: "Hi!",
       },
     ],
-    tags: ["New"],
+    tags: ["Baking"],
     bookmarked: false,
     answers: [
       {
@@ -173,7 +173,7 @@ export const questions = [
         commentText: "Welcome Zubar!",
       },
     ],
-    tags: ["New"],
+    tags: ["Breads", "Baking"],
     bookmarked: false,
     answers: [
       {
