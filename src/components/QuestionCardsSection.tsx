@@ -17,14 +17,32 @@ import { DataLoader } from "./DataLoader";
 import { NoPostsMessage } from "./NoPostsMessage";
 import { grey } from "../utilities/material-ui/material-colors";
 import { useLocation } from "react-router-dom";
-import { tags } from "../utilities/data/tags";
+
+const tagList: string[] = [
+  "Latest",
+  "Trending",
+  "Cake",
+  "Pastries",
+  "Breads",
+  "Cookies",
+  "Baking Tools",
+  "Decoration",
+];
 
 export function QuestionCardsSection({
   title,
   questions,
+  tagFilters,
+  updateFilter,
+  sortBy,
+  updateSortBy,
 }: {
   title: string;
   questions: Question[] | null;
+  tagFilters: string[];
+  updateFilter: (tag: string, action: string) => void;
+  sortBy: string;
+  updateSortBy: (sortType: string) => void;
 }) {
   const location = useLocation();
   const { questionStatus } = useAppSelector((state: RootState) => state.feed);
@@ -55,7 +73,7 @@ export function QuestionCardsSection({
         }}
       >
         <Typography variant="h6">{title}</Typography>
-        {questions && questions?.length > 0 && location.pathname === "/feed" && (
+        {questions && location.pathname === "/feed" && (
           <React.Fragment>
             <Tooltip title="Filters">
               <IconButton
@@ -67,10 +85,14 @@ export function QuestionCardsSection({
               </IconButton>
             </Tooltip>
             <Filters
+              tagFilters={tagFilters}
+              updateFilter={updateFilter}
               open={open}
               id={id}
               anchorEl={anchorEl}
               setAnchorEl={setAnchorEl}
+              sortBy={sortBy}
+              updateSortBy={updateSortBy}
             />
           </React.Fragment>
         )}
@@ -78,17 +100,15 @@ export function QuestionCardsSection({
       {/* for now this is static */}
       {location.pathname === "/explore" && (
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-          {tags.map((tag, index) => (
+          {tagList.map((tag) => (
             <ToggleButton
-              key={index}
-              value="check"
+              key={tag}
+              value={tag}
               sx={{ py: 0.5 }}
               size="small"
               color="primary"
-              selected={index % 4 === 0}
-              // onChange={() => {
-              //   setSelected(!selected);
-              // }}
+              selected={sortBy === tag}
+              onChange={() => updateSortBy(tag)}
             >
               {tag}
             </ToggleButton>
@@ -103,13 +123,19 @@ export function QuestionCardsSection({
       {questionStatus === LOADING && <DataLoader size={50} />}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
-        location.pathname === "/feed" && (
+        location.pathname === "/feed" && tagFilters.length === 0 && (
           <NoPostsMessage message="Start following fellow bakers to view their posts" />
         )}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
+        location.pathname === "/feed" && tagFilters.length > 0 && (
+          <NoPostsMessage message="Couldn't find any matches!" />
+        )}
+      {questionStatus === FULFILLED &&
+        questions?.length === 0 &&
         (location.pathname === "/profile" ||
-          location.pathname === "/bookmarks") && (
+          location.pathname === "/bookmarks" ||
+          location.pathname === "/explore") && (
           <NoPostsMessage message="No posts found" />
         )}
       {questionStatus === ERROR && (
@@ -120,3 +146,10 @@ export function QuestionCardsSection({
     </Box>
   );
 }
+
+QuestionCardsSection.defaultProps = {
+  tagFilters: [],
+  updateFilter: (value: string) => {},
+  sortBy: "",
+  updateSortBy: (value: string) => {},
+};

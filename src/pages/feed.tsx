@@ -22,9 +22,21 @@ export function Feed() {
   const { userDetails } = useAppSelector(
     (state: RootState) => state.authentication
   );
+  const [tagFilters, setTagFilters] = React.useState<string[]>([]);
+  const [sortBy, setSortBy] = React.useState<string>("Latest");
+
   const [questionsToDisplay, setQuestionsToDisplay] = React.useState<
     Question[]
   >([]);
+
+  const updateFilter = (tag: string, action: string) => {
+    action === "add"
+      ? setTagFilters((tags) => [...tags, tag])
+      : setTagFilters((tags) => tags.filter((item) => tag !== item));
+  };
+  const updateSortBy = (sortType: string) => {
+    setSortBy(sortType);
+  };
 
   React.useEffect(() => {
     //  fetch questions from db if not already fetched
@@ -32,12 +44,27 @@ export function Feed() {
       dispatch(getQuestions());
     }
     //  questions posted by the accounts that the user follows and the ones that are not posted by the user
-    setQuestionsToDisplay((value: Question[]) =>
-      questions?.filter((ques: Question) =>
-        userDetails.following.includes(ques.username)
-      )
-    );
-  }, [questions]);
+    let questionList =
+      tagFilters.length > 0
+        ? questions?.filter(
+            (ques: Question) =>
+              (userDetails.following.includes(ques.username) ||
+                userDetails.username === ques.username) &&
+              tagFilters.some((tag) => ques.tags.includes(tag))
+          )
+        : questions?.filter(
+            (ques: Question) =>
+              userDetails.following.includes(ques.username) ||
+              userDetails.username === ques.username
+          );
+
+    questionList?.sort((a, b) => {
+      return sortBy === "Latest"
+        ? new Date(b.updatedAt).valueOf() - new Date(a.updatedAt).valueOf()
+        : new Date(a.updatedAt).valueOf() - new Date(b.updatedAt).valueOf();
+    });
+    setQuestionsToDisplay((value: Question[]) => (value = [...questionList]));
+  }, [questions, tagFilters, sortBy]);
 
   return (
     <Box
@@ -53,6 +80,10 @@ export function Feed() {
       <QuestionCardsSection
         title="Latest Posts"
         questions={questionsToDisplay}
+        tagFilters={tagFilters}
+        updateFilter={updateFilter}
+        sortBy={sortBy}
+        updateSortBy={updateSortBy}
       />
       <TrendingSection />
       <AddPostMobile handleOpen={handleOpen} />
