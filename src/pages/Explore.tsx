@@ -8,7 +8,7 @@ import { getQuestions } from "../redux/slices/feedSlice";
 
 export function Explore() {
   const [selectedFilter, setSelectedFilter] =
-    React.useState<string>("Trending");
+    React.useState<string>("Latest");
   const dispatch = useAppDispatch();
   const { questions, questionStatus, searchInput } = useAppSelector(
     (state: RootState) => state.feed

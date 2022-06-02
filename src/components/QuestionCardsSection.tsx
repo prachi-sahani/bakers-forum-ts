@@ -46,7 +46,9 @@ export function QuestionCardsSection({
   updateSortBy: (sortType: string) => void;
 }) {
   const location = useLocation();
-  const { questionStatus } = useAppSelector((state: RootState) => state.feed);
+  const { questionStatus, searchInput } = useAppSelector(
+    (state: RootState) => state.feed
+  );
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -124,21 +126,23 @@ export function QuestionCardsSection({
       {questionStatus === LOADING && <DataLoader size={50} />}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
-        location.pathname === "/feed" && tagFilters.length === 0 && (
+        location.pathname === "/feed" &&
+        tagFilters.length === 0 &&
+        !searchInput && (
           <NoPostsMessage message="Start following fellow bakers to view their posts" />
         )}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
-        location.pathname === "/feed" && tagFilters.length > 0 && (
+        (tagFilters.length > 0 || searchInput) && (
           <NoPostsMessage message="Couldn't find any matches!" />
         )}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
         (location.pathname === "/profile" ||
           location.pathname === "/bookmarks" ||
-          location.pathname === "/explore") && (
-          <NoPostsMessage message="No posts found" />
-        )}
+          location.pathname === "/explore") &&
+        tagFilters.length === 0 &&
+        !searchInput && <NoPostsMessage message="No posts found" />}
       {questionStatus === ERROR && (
         <Typography variant="body1" sx={{ color: grey[600] }}>
           Some error occurred. Try reloading!
