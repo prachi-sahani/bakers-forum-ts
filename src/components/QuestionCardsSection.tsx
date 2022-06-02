@@ -108,7 +108,8 @@ export function QuestionCardsSection({
         )}
       {questionStatus === FULFILLED &&
         questions?.length === 0 &&
-        location.pathname === "/profile" && (
+        (location.pathname === "/profile" ||
+          location.pathname === "/bookmarks") && (
           <NoPostsMessage message="No posts found" />
         )}
       {questionStatus === ERROR && (

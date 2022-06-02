@@ -28,11 +28,11 @@ const sidenavItem = [
     title: "Bookmarks",
     route: "/bookmarks",
   },
-  {
-    icon: "notifications",
-    title: "Notifications",
-    route: "/notifications",
-  },
+  // {
+  //   icon: "notifications",
+  //   title: "Notifications",
+  //   route: "/notifications",
+  // },
   {
     icon: "account_circle",
     title: "Profile",

@@ -4,3 +4,4 @@ export { LandingPage } from "./LandingPage";
 export { SignIn } from "./Signin";
 export { SignUp } from "./SignUp";
 export { Explore } from "./Explore";
+export { Bookmark } from "./Bookmark";

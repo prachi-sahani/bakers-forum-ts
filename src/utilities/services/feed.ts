@@ -1,11 +1,14 @@
+import { addBookmark } from "../../redux/slices/feedSlice";
 import { Comment } from "../../types/Comment";
 import { NewQuestion } from "../../types/NewQuestion";
 import {
+  addBookmarkQuestion,
   addComment,
   addNewQuestion,
   addVote,
   getAllQuestions,
   getAllVotes,
+  removeBookmarkQuestion,
 } from "../server-request/server-request";
 
 // payload creator callback takes thunkAPI(rejectWithValue) as second argument and hence 1st argument as void
@@ -67,10 +70,36 @@ const callAddQuestion = async (
   }
 };
 
+const callAddBookmark = async (
+  { token, questionId }: { token: string; questionId: string },
+  { rejectWithValue }: any
+) => {
+  try {
+    const { data } = await addBookmarkQuestion(token, questionId);
+    return data.question;
+  } catch (err: any) {
+    return rejectWithValue(err.response.data.errors[0]);
+  }
+};
+
+const callRemoveBookmark = async (
+  { token, questionId }: { token: string; questionId: string },
+  { rejectWithValue }: any
+) => {
+  try {
+    const { data } = await removeBookmarkQuestion(token, questionId);
+    return data.question;
+  } catch (err: any) {
+    return rejectWithValue(err.response.data.errors[0]);
+  }
+};
+
 export {
   callGetAllQuestions,
   callAddComment,
   callGetAllVotes,
   callAddVote,
   callAddQuestion,
+  callAddBookmark,
+  callRemoveBookmark,
 };

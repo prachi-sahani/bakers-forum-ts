@@ -88,6 +88,26 @@ function unfollowUser(token: string, id: string) {
   );
 }
 
+function addBookmarkQuestion(token: string, id: string) {
+  return axios.post(
+    `/api/question/addBookmark/${id}`,
+    {},
+    {
+      headers: { authorization: token },
+    }
+  );
+}
+
+function removeBookmarkQuestion(token: string, id: string) {
+  return axios.post(
+    `/api/question/removeBookmark/${id}`,
+    {},
+    {
+      headers: { authorization: token },
+    }
+  );
+}
+
 export {
   signInUser,
   signUpUser,
@@ -101,4 +121,6 @@ export {
   addVote,
   followUser,
   unfollowUser,
+  addBookmarkQuestion,
+  removeBookmarkQuestion
 };

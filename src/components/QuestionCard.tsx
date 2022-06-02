@@ -6,6 +6,7 @@ import {
   CommentOutlinedIcon,
   ShareOutlinedIcon,
   BookmarkBorderOutlinedIcon,
+  BookmarkIcon,
 } from "../utilities/material-ui/material-icons";
 import {
   Box,
@@ -21,10 +22,14 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
+  Tooltip,
 } from "../utilities/material-ui/material-components";
 import { Question } from "../types/Question";
 import { VoteSection } from "./VoteSection";
 import { CommentSection } from "./CommentSection";
+import { useAppDispatch, useAppSelector } from "../redux/customHook";
+import { addBookmark, removeBookmark } from "../redux/slices/feedSlice";
+import { RootState } from "../redux/store";
 interface ExpandCommentsProps extends IconButtonProps {
   expand: boolean;
 }
@@ -45,7 +50,10 @@ const ExpandComments = styled((props: ExpandCommentsProps) => {
 
 export function QuestionCard({ question }: QuestionCardProp) {
   const [expanded, setExpanded] = React.useState(false);
-
+  const dispatch = useAppDispatch();
+  const { authToken } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -65,7 +73,7 @@ export function QuestionCard({ question }: QuestionCardProp) {
                 <ListItemAvatar sx={{ minWidth: "2rem" }}>
                   <Avatar
                     sx={{
-                      bgcolor: grey[400],
+                      backgroundColor: grey[400],
                       height: "1.5rem",
                       width: "1.5rem",
                       fontSize: "1rem",
@@ -110,14 +118,45 @@ export function QuestionCard({ question }: QuestionCardProp) {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <CommentOutlinedIcon />
+            <Tooltip title="Comments">
+              <CommentOutlinedIcon />
+            </Tooltip>
           </ExpandComments>
-          <IconButton aria-label="share">
-            <ShareOutlinedIcon />
-          </IconButton>
-          <IconButton aria-label="bookmark">
-            <BookmarkBorderOutlinedIcon />
-          </IconButton>
+          <Tooltip title="Share">
+            <IconButton aria-label="share">
+              <ShareOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+          {question.bookmarked && authToken ? (
+            <Tooltip title="Remove Bookmark">
+              <IconButton
+                aria-label="bookmark"
+                onClick={() =>
+                  dispatch(
+                    removeBookmark({
+                      token: authToken,
+                      questionId: question._id,
+                    })
+                  )
+                }
+              >
+                <BookmarkIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Add Bookmark">
+              <IconButton
+                aria-label="bookmark"
+                onClick={() =>
+                  dispatch(
+                    addBookmark({ token: authToken, questionId: question._id })
+                  )
+                }
+              >
+                <BookmarkBorderOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </CardActions>
         <CommentSection question={question} expanded={expanded} />
       </Box>

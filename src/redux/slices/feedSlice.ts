@@ -7,11 +7,13 @@ import {
 } from "../../utilities/constants/api-status";
 import { Question } from "../../types/Question";
 import {
+  callAddBookmark,
   callAddComment,
   callAddQuestion,
   callAddVote,
   callGetAllQuestions,
   callGetAllVotes,
+  callRemoveBookmark,
 } from "../../utilities/services/feed";
 
 interface FeedQuestionType {
@@ -26,6 +28,10 @@ interface FeedQuestionType {
   addVoteAPIError: string;
   addQuestionAPIStatus: string;
   addQuestionAPIError: string;
+  addBookmarkQuestionAPIStatus: string;
+  addBookmarkQuestionAPIError: string;
+  removeBookmarkQuestionAPIStatus: string;
+  removeBookmarkQuestionAPIError: string;
 }
 
 const initialData: FeedQuestionType = {
@@ -40,6 +46,10 @@ const initialData: FeedQuestionType = {
   addVoteAPIError: "",
   addQuestionAPIStatus: IDLE,
   addQuestionAPIError: "",
+  addBookmarkQuestionAPIStatus: IDLE,
+  addBookmarkQuestionAPIError: "",
+  removeBookmarkQuestionAPIStatus: IDLE,
+  removeBookmarkQuestionAPIError: "",
 };
 
 export const getQuestions = createAsyncThunk(
@@ -50,6 +60,14 @@ export const getQuestions = createAsyncThunk(
 export const addComment = createAsyncThunk("/feed/addComment", callAddComment);
 export const getVotes = createAsyncThunk("/feed/getVotes", callGetAllVotes);
 export const addVote = createAsyncThunk("/feed/addVote", callAddVote);
+export const addBookmark = createAsyncThunk(
+  "/feed/addBookmark",
+  callAddBookmark
+);
+export const removeBookmark = createAsyncThunk(
+  "/feed/removeBookmark",
+  callRemoveBookmark
+);
 export const addQuestion = createAsyncThunk(
   "/feed/addQuestion",
   callAddQuestion
@@ -111,6 +129,32 @@ const feedSlice = createSlice({
     builder.addCase(addQuestion.rejected, (state, action) => {
       state.addQuestionAPIStatus = ERROR;
       state.addVoteAPIError = String(action.payload);
+    });
+    builder.addCase(addBookmark.pending, (state) => {
+      state.addBookmarkQuestionAPIStatus = LOADING;
+    });
+    builder.addCase(addBookmark.fulfilled, (state, action) => {
+      state.addBookmarkQuestionAPIStatus = FULFILLED;
+      state.questions = state.questions.map((question) =>
+        question._id === action.payload._id ? action.payload : question
+      );
+    });
+    builder.addCase(addBookmark.rejected, (state, action) => {
+      state.addBookmarkQuestionAPIStatus = ERROR;
+      state.addBookmarkQuestionAPIError = String(action.payload);
+    });
+    builder.addCase(removeBookmark.pending, (state) => {
+      state.removeBookmarkQuestionAPIStatus = LOADING;
+    });
+    builder.addCase(removeBookmark.fulfilled, (state, action) => {
+      state.removeBookmarkQuestionAPIStatus = FULFILLED;
+      state.questions = state.questions.map((question) =>
+        question._id === action.payload._id ? action.payload : question
+      );
+    });
+    builder.addCase(removeBookmark.rejected, (state, action) => {
+      state.removeBookmarkQuestionAPIStatus = ERROR;
+      state.removeBookmarkQuestionAPIError = String(action.payload);
     });
   },
 });
