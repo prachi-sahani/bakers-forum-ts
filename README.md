@@ -22,17 +22,19 @@
   - view questions posted by accounts they follow
   - upvote/downvote the questions
   - comment on the questions
+  - bookmark questions
+  - share questions
   - follow/unfollow people 
   - create new post
-  - rest of the features will be include with time
+  - view individual question
 
 - **[User Profile](https://bakers-forum.vercel.app/profile)** - user profile. Users can
   - view questions posted by them
   - follow/unfollow users
   - view their basic details
-  - edit profile feature is under development
+  - edit profile(all details except username)
 
- - **[Authentication](https://bakers-forum.vercel.app/signin)** - User can create a new account(sign up), sign in, sign in as guest and logout.
+- **[Authentication](https://bakers-forum.vercel.app/signin)** - User can create a new account(sign up), sign in, sign in as guest and logout.
  - Several other pages and functionalities like **explore page**, **bookmarking the question**, **bookmarks pages**, **individual question page**, **individual user profiles page**, **share feature for questions** will be included very soon. 
 
 
@@ -44,6 +46,7 @@
 <img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003735-22251960-5454-42c6-8f9e-ca2b4e2184c0.png">
 <img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003835-595fdd21-f4bb-4283-b26b-31b547185a4d.png">
 <img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003902-90cf5172-98b6-4cc6-b697-43826e3be8fe.png">
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/64582473/171812455-9df35124-a91a-4dca-8eaa-244dbbed3a96.png">
 
 <a name="tech"></a>
 ### Technologies and libraries used ###
