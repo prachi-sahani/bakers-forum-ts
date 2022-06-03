@@ -46,7 +46,7 @@
 <img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003735-22251960-5454-42c6-8f9e-ca2b4e2184c0.png">
 <img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003835-595fdd21-f4bb-4283-b26b-31b547185a4d.png">
 <img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171003902-90cf5172-98b6-4cc6-b697-43826e3be8fe.png">
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/64582473/171812455-9df35124-a91a-4dca-8eaa-244dbbed3a96.png">
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/64582473/171812455-9df35124-a91a-4dca-8eaa-244dbbed3a96.png">
 
 <a name="tech"></a>
 ### Technologies and libraries used ###
