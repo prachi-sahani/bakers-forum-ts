@@ -30,6 +30,8 @@ import { CommentSection } from "./CommentSection";
 import { useAppDispatch, useAppSelector } from "../redux/customHook";
 import { addBookmark, removeBookmark } from "../redux/slices/feedSlice";
 import { RootState } from "../redux/store";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ShareQuestionDialog } from "./ShareQuestionDialog";
 interface ExpandCommentsProps extends IconButtonProps {
   expand: boolean;
 }
@@ -49,13 +51,22 @@ const ExpandComments = styled((props: ExpandCommentsProps) => {
 }));
 
 export function QuestionCard({ question }: QuestionCardProp) {
-  const [expanded, setExpanded] = React.useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [questionLink, setQuestionLink] = React.useState<string>("");
+  const [openShareDialog, setOpenShareDialog] = React.useState<boolean>(false);
+  const [expanded, setExpanded] = React.useState(
+    location.pathname.includes("question")
+  );
   const dispatch = useAppDispatch();
   const { authToken } = useAppSelector(
     (state: RootState) => state.authentication
   );
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+  const updateOpenShareDialog = (value: boolean) => {
+    setOpenShareDialog(value);
   };
 
   return (
@@ -65,7 +76,13 @@ export function QuestionCard({ question }: QuestionCardProp) {
         <CardHeader
           sx={{ p: 1 }}
           subheader={
-            <Typography variant="h6">{question.questionTitle}</Typography>
+            <Typography
+              variant="h6"
+              sx={{ cursor: "pointer" }}
+              onClick={() => navigate(`/question/${question.id}`)}
+            >
+              {question.questionTitle}
+            </Typography>
           }
           title={
             <React.Fragment>
@@ -88,7 +105,12 @@ export function QuestionCard({ question }: QuestionCardProp) {
           }
         />
         <CardContent sx={{ p: 1 }}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ cursor: "pointer" }}
+            onClick={() => navigate(`/question/${question.id}`)}
+          >
             {question.questionText}
           </Typography>
           <Box sx={{ display: "flex", my: 1, flexWrap: "wrap", gap: 1 }}>
@@ -123,7 +145,18 @@ export function QuestionCard({ question }: QuestionCardProp) {
             </Tooltip>
           </ExpandComments>
           <Tooltip title="Share">
-            <IconButton aria-label="share">
+            <IconButton
+              aria-label="share"
+              onClick={() => {
+                setQuestionLink(
+                  window.location.href.replace(
+                    location.pathname,
+                    `/question/${question.id}`
+                  )
+                );
+                setOpenShareDialog(true);
+              }}
+            >
               <ShareOutlinedIcon />
             </IconButton>
           </Tooltip>
@@ -160,6 +193,11 @@ export function QuestionCard({ question }: QuestionCardProp) {
         </CardActions>
         <CommentSection question={question} expanded={expanded} />
       </Box>
+      <ShareQuestionDialog
+        questionLink={questionLink}
+        open={openShareDialog}
+        handleClose={updateOpenShareDialog}
+      />
     </Card>
   );
 }

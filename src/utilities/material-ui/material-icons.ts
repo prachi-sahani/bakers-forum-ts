@@ -9,7 +9,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import CloseIcon from "@mui/icons-material/Close";
 import FeedOutlinedIcon from "@mui/icons-material/FeedOutlined";
 import LoginIcon from "@mui/icons-material/Login";
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CheckIcon from "@mui/icons-material/Check";
 
 export {
   CommentOutlinedIcon,
@@ -23,5 +25,7 @@ export {
   CloseIcon,
   FeedOutlinedIcon,
   LoginIcon,
-  BookmarkIcon
+  BookmarkIcon,
+  ContentCopyIcon,
+  CheckIcon,
 };

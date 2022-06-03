@@ -34,6 +34,10 @@ function getAllQuestions() {
   return axios.get("/api/questions");
 }
 
+function getQuestion(questionId: string) {
+  return axios.get(`/api/questions/${questionId}`);
+}
+
 function addNewQuestion(token: string, dataToSend: NewQuestion) {
   return axios.post(
     "/api/questions/add",
@@ -115,6 +119,7 @@ export {
   getUserData,
   editUserData,
   getAllQuestions,
+  getQuestion,
   addNewQuestion,
   addComment,
   getAllVotes,
@@ -122,5 +127,5 @@ export {
   followUser,
   unfollowUser,
   addBookmarkQuestion,
-  removeBookmarkQuestion
+  removeBookmarkQuestion,
 };

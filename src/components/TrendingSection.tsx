@@ -110,7 +110,7 @@ export function TrendingSection() {
                     unfollowUserAPIStatus === LOADING &&
                     selectedUsername === item.username
                   }
-                  onClick={() => followUnfollowUser("follow", item)}
+                  onClick={() => followUnfollowUser("unfollow", item)}
                 >
                   Unfollow
                 </LoadingButton>

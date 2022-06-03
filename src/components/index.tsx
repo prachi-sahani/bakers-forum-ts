@@ -9,3 +9,4 @@ export { RequireAuth } from "./RequireAuth";
 export { Sidenav } from "./Sidenav";
 export { TrendingSection } from "./TrendingSection";
 export { UserProfile } from "./UserProfile";
+export { DataLoader } from "./DataLoader";
