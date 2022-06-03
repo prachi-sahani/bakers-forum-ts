@@ -13,7 +13,7 @@
 
 <a name="about"></a>
 ### About Bakers' Forum ###
-**[Bakers' Forum](https://bakers-forum.vercel.app/)** -  a forum app for the people to connect and share their baking storied, recipes etc.
+**[Bakers' Forum](https://bakers-forum.vercel.app/)** -  a forum app for the people to connect and share their baking stories, recipes etc.
 
 <a name="features"></a>
 ### Features and demo ###
