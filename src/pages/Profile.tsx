@@ -43,7 +43,7 @@ export function Profile() {
         gap: 2,
       }}
     >
-      <UserProfile user={userDetails} />
+      <UserProfile user={userDetails} posts={questionsToDisplay.length}/>
       <QuestionCardsSection title="My Posts" questions={questionsToDisplay} />
       {editUserAPIError && <CustomSnackbar message={editUserAPIError} />}
     </Box>
