@@ -2,7 +2,6 @@ import { SignInDataToSend } from "../../types/SignInDataToSend";
 import { SignUpDataToSend } from "../../types/SignUpDataToSend";
 import {
   editUserData,
-  getUserData,
   signInUser,
   signUpUser,
 } from "../server-request/server-request";
@@ -13,8 +12,7 @@ const callSignIn = async (
 ) => {
   try {
     const { data } = await signInUser({ username, password });
-    const userData = await getUserData(data.foundUser._id);
-    return { authToken: data.encodedToken, userDetails: userData.data.user };
+    return { authToken: data.encodedToken, userDetails: data.foundUser };
   } catch (err: any) {
     return rejectWithValue(err.response.data.errors[0]);
   }
@@ -26,8 +24,7 @@ const callSignUp = async (
 ) => {
   try {
     const { data } = await signUpUser(dataToSend);
-    const userData = await getUserData(data.createdUser._id);
-    return { authToken: data.encodedToken, userDetails: userData.data.user };
+    return { authToken: data.encodedToken, userDetails: data.createdUser };
   } catch (err: any) {
     return rejectWithValue(err.response.data.errors[0]);
   }
