@@ -68,6 +68,18 @@ export function QuestionCard({ question }: QuestionCardProp) {
   const updateOpenShareDialog = (value: boolean) => {
     setOpenShareDialog(value);
   };
+  const updateBookmark = (id: string) => {
+    if (authToken) {
+      dispatch(
+        addBookmark({
+          token: authToken,
+          questionId: id,
+        })
+      );
+    } else {
+      navigate("/signIn");
+    }
+  };
 
   return (
     <Card sx={{ display: "flex" }}>
@@ -180,11 +192,9 @@ export function QuestionCard({ question }: QuestionCardProp) {
             <Tooltip title="Add Bookmark">
               <IconButton
                 aria-label="bookmark"
-                onClick={() =>
-                  dispatch(
-                    addBookmark({ token: authToken, questionId: question._id })
-                  )
-                }
+                onClick={() => {
+                  updateBookmark(question._id);
+                }}
               >
                 <BookmarkBorderOutlinedIcon />
               </IconButton>
