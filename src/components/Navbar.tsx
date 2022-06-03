@@ -103,7 +103,7 @@ export function Navbar() {
               }}
             >
               <Tooltip title="Log in">
-                <IconButton onClick={() => navigate("/signin")}>
+                <IconButton onClick={() => navigate("/signIn")}>
                   <LoginIcon sx={{ color: "white" }} />
                 </IconButton>
               </Tooltip>
