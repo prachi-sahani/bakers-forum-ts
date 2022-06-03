@@ -35,7 +35,8 @@
   - edit profile(all details except username)
 
 - **[Authentication](https://bakers-forum.vercel.app/signin)** - User can create a new account(sign up), sign in, sign in as guest and logout.
- - Several other pages and functionalities like **explore page**, **bookmarking the question**, **bookmarks pages**, **individual question page**, **individual user profiles page**, **share feature for questions** will be included very soon. 
+
+- Other pages and features like **individual user profiles page**, **edit and delete option for questions** will be included very soon. 
 
 
 **Glimpses**:
