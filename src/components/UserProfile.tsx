@@ -10,7 +10,7 @@ import { EditProfile } from "./EditProfile";
 import React from "react";
 import { useAppSelector } from "../redux/customHook";
 import { RootState } from "../redux/store";
-export function UserProfile({ user }: { user: UserDetails }) {
+export function UserProfile({ user, posts }: { user: UserDetails, posts:number }) {
   const { followUserAPIStatus, unfollowUserAPIStatus } = useAppSelector(
     (state: RootState) => state.users
   );
@@ -54,7 +54,7 @@ export function UserProfile({ user }: { user: UserDetails }) {
           color: grey[700],
         }}
       >
-        <Typography variant="body2">23 posts</Typography>
+        <Typography variant="body2">{posts} posts</Typography>
         <Typography variant="body2">{followers.length} followers</Typography>
         <Typography variant="body2">{following.length} following</Typography>
       </Box>
