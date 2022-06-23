@@ -139,14 +139,14 @@ export function SignIn() {
               Sign In as Guest
             </Button>
             <Grid container>
-              <Grid item xs sx={{ color: "blue[500]", fontSize: 14 }}>
+              {/* <Grid item xs sx={{ color: "blue[500]", fontSize: 14 }}>
                 <Link to="" style={{ textDecoration: "none" }}>
                   <Typography component="span" color="primary" variant="body2">
                     Forgot password?
                   </Typography>
                 </Link>
-              </Grid>
-              <Grid item sx={{ color: "blue[500]", fontSize: 14 }}>
+              </Grid> */}
+              <Grid item sx={{ color: "blue[500]", fontSize: 14., marginLeft:"auto" }}>
                 <Link to="/signUp" style={{ textDecoration: "none" }}>
                   <Typography component="span" color="primary" variant="body2">
                     Don't have an account? Sign Up

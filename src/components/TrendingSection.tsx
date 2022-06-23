@@ -87,25 +87,25 @@ export function TrendingSection() {
         <OutlinedInput
           fullWidth
           value={searchInput}
-          placeholder="Search posts, people, anything"
+          placeholder="Search posts"
           sx={{ fontSize: 14 }}
           inputProps={{ style: { padding: 6 } }}
           onChange={(e) => dispatch(updateSearch(e.target.value))}
         />
       )}
       <Box sx={{ my: 2, display: { xs: "none", md: "block" } }}>
-        <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+        <Typography variant="body1" sx={{ fontWeight: "bold", color:grey[800] }}>
           You may also know
         </Typography>
         <List>
           {usersToDisplay.map((item, index) => (
-            <ListItem sx={{ p: 0 }} key={index}>
+            <ListItem sx={{ p: 0, py:0.25 }} key={index}>
               <ListItemText secondary={`@${item.username}`} />
               {isFollowing(item.username) ? (
                 <LoadingButton
                   size="small"
                   variant="text"
-                  sx={{ fontSize: 12, textTransform: "none" }}
+                  sx={{ fontSize: 14, textTransform: "none" }}
                   loading={
                     unfollowUserAPIStatus === LOADING &&
                     selectedUsername === item.username
@@ -118,7 +118,7 @@ export function TrendingSection() {
                 <LoadingButton
                   size="small"
                   variant="text"
-                  sx={{ fontSize: 12, textTransform: "none" }}
+                  sx={{ fontSize: 14, textTransform: "none" }}
                   onClick={() => followUnfollowUser("follow", item)}
                   loading={
                     followUserAPIStatus === LOADING &&

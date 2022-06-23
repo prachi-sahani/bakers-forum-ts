@@ -82,6 +82,14 @@ export function SignUp() {
     }
   };
 
+  const fillDummyData = () => {
+    setFormData({...formData, username: "new_user",
+    password: "123456",
+    firstName: "New",
+    lastName: "User",
+    bio: "I am new user"})
+  }
+
   return (
     <React.Fragment>
       {authStatus === LOADING && <FullscreenLoader />}
@@ -196,9 +204,18 @@ export function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 1 }}
             >
               Sign Up
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="outlined"
+              onClick={fillDummyData}
+              sx={{ mt:1, mb: 2 }}
+            >
+              FILL UP TEST DATA
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
