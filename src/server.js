@@ -66,7 +66,7 @@ export function makeServer({ environment = "development" } = {}) {
         server.create("user", {
           ...item,
           followers: [],
-          following: ["prachisahani"],
+          following: ["prachisahani", "itshamhere", "zuberdunge", "hinanshi04"],
         })
       );
 
