@@ -53,7 +53,7 @@ export function AddComment({ id }: { id: string }) {
           )
         : setCommentError("Required");
     } else {
-      navigate("/signin", { state: { from: location } });
+      navigate("/signIn", { state: { from: location } });
     }
   };
 

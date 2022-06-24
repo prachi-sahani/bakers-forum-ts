@@ -58,7 +58,7 @@ export function Sidenav({
   const createNewPost = () => {
     authToken
       ? handleOpen()
-      : navigate("/signin", { state: { from: location } });
+      : navigate("/signIn", { state: { from: location } });
   };
   return (
     <Box sx={{ flexShrink: 0, display: { xs: "none", md: "block" } }}>

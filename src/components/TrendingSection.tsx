@@ -78,7 +78,7 @@ export function TrendingSection() {
         dispatch(followUser({ token: authToken, id: item._id }));
       }
     } else {
-      navigate("/signin", { state: { from: location } });
+      navigate("/signIn", { state: { from: location } });
     }
   };
   return (

@@ -36,7 +36,7 @@ export function CommentSection({
             color="primary"
             component="p"
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate("/signin", { state: { from: location } })}
+            onClick={() => navigate("/signIn", { state: { from: location } })}
             fontWeight={600}
           >
             Sign in to comment

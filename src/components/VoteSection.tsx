@@ -30,7 +30,7 @@ export function VoteSection({ question }: { question: Question }) {
         dispatch(addVote({ token: authToken, id: question._id, vote: type }));
       }
     } else {
-      navigate("/signin", { state: { from: location } });
+      navigate("/signIn", { state: { from: location } });
     }
   };
 
